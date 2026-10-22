@@ -5,7 +5,8 @@
     "composite": false,
     "allowImportingTsExtensions": true,
     "paths": {
-      "@phoenix/contracts": ["./packages/contracts/src/index.ts"]
+      "@phoenix/contracts": ["./packages/contracts/src/index.ts"],
+      "@phoenix/toolkit": ["./packages/toolkit/src/index.ts"]
     }
   },
   "include": [

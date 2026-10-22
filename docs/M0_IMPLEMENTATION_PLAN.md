@@ -1,7 +1,7 @@
 # PHOENIX — M0 Foundation Implementation Plan
 
 > **Document ID:** PHX-M0-PLAN-001
-> **Status:** P-1 through P-6 accepted by project instruction on 2026-10-22; implementation limited to WP0 and WP1 in this milestone
+> **Status:** P-1 through P-6 accepted by project instruction on 2026-10-22; WP0/WP1 and hardening implemented; WP2 platform services implemented, platform validation recorded separately
 > **Date:** 2026-10-22
 > **Governing spec:** `docs/PHOENIX_ENGINEERING_SOURCE_OF_TRUTH.md` (PHX-SOT-001 v1.0.2). Where this plan and the source of truth (SOT) disagree, the SOT wins until a proposal in §9 is accepted through the SOT §20.2 workflow.
 > **Audience:** the implementing coding agent (Codex) and reviewers.
@@ -1608,7 +1608,9 @@ All of §3. `scripts/contracts-snapshot.ts` writes `packages/contracts/schemas/*
 - tree digest: order independence, NFC vs NFD names (created at runtime), normalized-path collision rejection, invalid-Unicode rejection, JSON record round-trips for newlines/CR/tabs/quotes/backslashes/control characters, excludes change the digest, truncation yields no digest;
 - logger redaction.
 
-**Exit:** green on 3 OSes.
+**Implementation record:** [WP2_RESULTS.md](WP2_RESULTS.md), [WP2 hardening](WP2_HARDENING_RESULTS.md) and [toolkit API/limits](../packages/toolkit/README.md). No shared schema changes are required. The authorized toolkit runner structurally adds signal reporting, leaving shared interfaces intact. Filesystem identity checks reduce races and do not promise an atomic snapshot. Windows taskkill is initiated only for a known-running child, never after observed exit; reliable descendant tracking after parent exit requires a future Job Object provider. Unsupported explicit environment overrides are rejected, and retained output pipes have a separate drain deadline. Windows taskkill cannot guarantee post-parent-exit descendant tracking; see the recorded limitations and conditional test.
+
+**Exit:** green on 3 OSes. Local Linux execution does not satisfy the outstanding hosted Windows/macOS gate.
 
 ### WP3 — Formats, intake, fixtures
 

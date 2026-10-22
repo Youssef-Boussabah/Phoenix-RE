@@ -458,6 +458,8 @@ phoenix/
 
 Target intake is consolidated in `toolkit/src/intake`; the built-in fileinfo provider lives in toolkit, and external providers get directories only when implemented (ADR-0004).
 
+WP2 implements toolkit platform services (host/data paths, contained reads, IDs/hashing, executable discovery, authorized bounded processes and structured logging); see [WP2 results](WP2_RESULTS.md) and [review corrections](WP2_HARDENING_RESULTS.md) for actual verification and portability limitations. Formats, intake classification and provider dispatch remain later work packages. Shared v1.0.2 contracts and accepted architecture are unchanged.
+
 Create packages only as functional code arrives; empty scaffolding is not progress. Keep all vendor coupling inside adapters. Every module requires a named owner, test surface, and contract.
 
 **Build reproducibility:** lockfiles; pinned tool versions in reproducible environments; documented installed JDK/toolchain prerequisites; CI matrix for supported hosts; fixtures checked for hashes; deterministic seeds when possible. Never commit target software or copyrighted proprietary assets that cannot be redistributed.

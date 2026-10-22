@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 export default defineConfig({
   resolve: {
     alias: {
+      '@phoenix/toolkit': fileURLToPath(new URL('./packages/toolkit/src/index.ts', import.meta.url)),
       '@phoenix/contracts': fileURLToPath(new URL('./packages/contracts/src/index.ts', import.meta.url)),
     },
   },
@@ -20,9 +21,12 @@ export default defineConfig({
     ],
     coverage: {
       provider: 'v8',
-      include: ['packages/contracts/src/**/*.ts'],
+      include: ['packages/contracts/src/**/*.ts', 'packages/toolkit/src/**/*.ts'],
       reporter: ['text', 'json-summary', 'html'],
-      thresholds: { lines: 95, statements: 95, functions: 95, branches: 95 },
+      thresholds: {
+        'packages/contracts/src/**': { lines: 95, statements: 95, functions: 95, branches: 95 },
+        'packages/toolkit/src/**': { lines: 85, statements: 85, functions: 85, branches: 85 },
+      },
     },
   },
 });

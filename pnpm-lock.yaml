@@ -42,6 +42,12 @@ importers:
         specifier: 4.6.7
         version: 4.6.7
 
+  packages/toolkit:
+    dependencies:
+      '@phoenix/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+
 packages:
 
   '@babel/helper-string-parser@7.29.7':
