@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "file",
+        "directory",
+        "url"
+      ]
+    },
+    "displayName": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "type",
+    "displayName"
+  ],
+  "additionalProperties": false,
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/TargetSource.schema.json",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

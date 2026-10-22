@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "code": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "x-phoenix-runtime-constraints": "NFC, well-formed Unicode, POSIX relative path; no absolute paths, empty/dot segments, NUL or backslashes"
+    }
+  },
+  "required": [
+    "code",
+    "message"
+  ],
+  "additionalProperties": false,
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/TargetWarning.schema.json",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

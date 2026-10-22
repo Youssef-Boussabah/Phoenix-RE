@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "x-phoenix-runtime-constraints": "NFC, well-formed Unicode, POSIX relative path; no absolute paths, empty/dot segments, NUL or backslashes"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "file",
+        "directory",
+        "symlink",
+        "other"
+      ]
+    },
+    "sizeBytes": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "format": {
+      "type": "string",
+      "enum": [
+        "elf",
+        "pe",
+        "macho",
+        "macho-fat",
+        "wasm",
+        "dex",
+        "apk",
+        "asar",
+        "zip",
+        "jar",
+        "java-class",
+        "html",
+        "text",
+        "empty",
+        "directory",
+        "url",
+        "unknown"
+      ]
+    }
+  },
+  "required": [
+    "path",
+    "type"
+  ],
+  "additionalProperties": false,
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/InventoryEntry.schema.json",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

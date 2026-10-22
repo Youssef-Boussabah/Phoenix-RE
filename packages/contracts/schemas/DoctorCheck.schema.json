@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "required",
+        "optional"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "warn",
+        "fail",
+        "skip"
+      ]
+    },
+    "detail": {
+      "type": "string"
+    },
+    "remediation": {
+      "type": "string"
+    },
+    "neededBy": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "id",
+    "title",
+    "category",
+    "status",
+    "detail",
+    "neededBy"
+  ],
+  "additionalProperties": false,
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/DoctorCheck.schema.json",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

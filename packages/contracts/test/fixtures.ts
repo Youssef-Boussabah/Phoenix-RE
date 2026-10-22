@@ -1,0 +1,288 @@
+export const timestamp = '2026-10-22T12:34:56.789Z';
+export const id = (prefix: string) => `${prefix}_${'0'.repeat(32)}`;
+export const digest = 'a'.repeat(64);
+export const host = {
+  os: 'linux',
+  arch: 'x64',
+  osRelease: 'test',
+  nodeVersion: '24.11.0',
+  isWsl: false,
+  phoenixVersion: '0.0.0',
+};
+export const classification = { kind: 'unknown', format: 'unknown', signals: [], classifierVersion: '1' };
+export const description = {
+  schemaVersion: 1,
+  source: { type: 'file', displayName: 'sample' },
+  classification,
+  kind: 'unknown',
+  compatibility: { staticAnalysis: 'supported', nativeExecution: 'unknown', reason: 'unknown format' },
+  warnings: [],
+  inspectedAt: timestamp,
+  inspectedOn: host,
+};
+export const manifest = {
+  ...description,
+  id: id('tgt'),
+  projectId: id('prj'),
+  uri: `phoenix:target/${id('tgt')}/source`,
+  hostOs: 'linux',
+  intakeMode: 'reference',
+  createdAt: timestamp,
+  metadata: {},
+};
+export const errorShape = { code: 'TIMEOUT', message: 'Timed out', retryable: true };
+export const producer = { type: 'provider', id: 'phoenix.fileinfo', version: '0.1.0' };
+export const evidence = { id: id('evr'), kind: 'static', artifactId: id('art') };
+export const observation = {
+  schemaVersion: 1,
+  id: id('obs'),
+  targetId: id('tgt'),
+  producer,
+  kind: 'static',
+  type: 'test',
+  data: {},
+  createdAt: timestamp,
+};
+export const finding = {
+  schemaVersion: 1,
+  id: id('fnd'),
+  targetId: id('tgt'),
+  statement: 'A hypothesis',
+  status: 'hypothesis',
+  evidence: [],
+  limitations: [],
+  revision: 1,
+  author: producer,
+  createdAt: timestamp,
+};
+export const job = {
+  schemaVersion: 1,
+  id: id('job'),
+  projectId: id('prj'),
+  mode: 'investigate',
+  objective: 'inspect structure',
+  targetId: id('tgt'),
+  state: 'created',
+  version: 0,
+  budget: {},
+  policy: {},
+  createdAt: timestamp,
+  updatedAt: timestamp,
+};
+export const event = {
+  schemaVersion: 1,
+  id: id('evt'),
+  jobId: id('job'),
+  seq: 0,
+  createdAt: timestamp,
+  type: 'job_created',
+  payload: { mode: 'investigate', targetId: id('tgt') },
+};
+export const envelope = {
+  schemaVersion: 1,
+  requestId: id('req'),
+  operation: 'inspect_target',
+  providerId: 'phoenix.fileinfo',
+  providerVersion: '0.1.0',
+  targetId: null,
+  timestamp,
+  status: 'ok',
+  durationMs: 0,
+  data: {},
+  evidenceRefs: [],
+  artifacts: [],
+  warnings: [],
+  error: null,
+};
+export const descriptor = {
+  id: 'phoenix.fileinfo',
+  version: '0.1.0',
+  displayName: 'File info',
+  operations: [],
+  supportedKinds: ['unknown'],
+  supportedHosts: ['linux'],
+  priority: 0,
+};
+export const availability = {
+  providerId: 'phoenix.fileinfo',
+  available: true,
+  prerequisites: [],
+  checkedAt: timestamp,
+};
+export const capabilities = {
+  providerId: 'phoenix.fileinfo',
+  providerVersion: '0.1.0',
+  available: true,
+  supportedOperations: [],
+  supportedKinds: ['unknown'],
+  needsRuntime: false,
+  supportedHosts: ['linux'],
+  prerequisites: [],
+  reasons: [],
+};
+export const providerStatus = { schemaVersion: 1, descriptor, availability };
+export const project = { schemaVersion: 1, id: id('prj'), name: 'test', createdAt: timestamp };
+export const check = {
+  id: 'node.version',
+  title: 'Node',
+  category: 'required',
+  status: 'pass',
+  detail: '24.11.0',
+  neededBy: [],
+};
+export const doctor = {
+  schemaVersion: 1,
+  phoenixVersion: '0.0.0',
+  host,
+  dataDir: { path: '/tmp/phoenix', exists: false, writable: true },
+  checks: [check],
+  providers: [providerStatus],
+  ok: true,
+};
+export const inspectInput = { source: { type: 'path', path: 'sample' } };
+export const inspectReport = {
+  schemaVersion: 1,
+  target: description,
+  capabilities: [capabilities],
+  durationMs: 0,
+};
+export const artifact = {
+  id: id('art'),
+  sha256: digest,
+  sizeBytes: 0,
+  mediaType: 'application/octet-stream',
+};
+export const inventoryEntry = {
+  path: 'src/app.ts',
+  type: 'file',
+  sizeBytes: 1,
+  sha256: digest,
+  format: 'text',
+};
+export const step = {
+  schemaVersion: 1,
+  id: id('stp'),
+  jobId: id('job'),
+  stepKey: 'fingerprint',
+  status: 'pending',
+  attempt: 0,
+  maxAttempts: 3,
+  createdAt: timestamp,
+};
+export const evidenceItem = { schemaVersion: 1, type: 'observation', observation, stale: false };
+
+// Explicit examples are independent of the schema definitions. The suite verifies registry coverage.
+export const fixtures: Record<string, unknown> = {
+  AddTargetInput: { ...inspectInput, projectId: id('prj') },
+  AnalysisRequest: { requestId: id('req'), operation: 'inspect_target', params: {} },
+  ArtifactRef: artifact,
+  CapabilityReport: capabilities,
+  ClassificationBasis: 'signature',
+  ClassificationSignal: { basis: 'signature', description: 'magic' },
+  CpuArch: 'x64',
+  CreateJobInput: { projectId: id('prj'), mode: 'investigate', objective: 'inspect', targetId: id('tgt') },
+  CreateProjectInput: { name: 'project' },
+  DoctorCheck: check,
+  DoctorInput: {},
+  DoctorReport: doctor,
+  EnvelopeStatus: 'ok',
+  ErrorCode: 'INTERNAL',
+  EvidenceDraft: { kind: 'static' },
+  EvidenceItem: evidenceItem,
+  EvidencePage: { schemaVersion: 1, items: [evidenceItem] },
+  EvidenceRef: evidence,
+  ExecutionPolicy: {},
+  FileFormat: 'unknown',
+  Finding: finding,
+  FindingStatus: 'hypothesis',
+  FormatDetails: { format: 'wasm', version: 1 },
+  HostCompatibility: description.compatibility,
+  HostInfo: host,
+  HostOs: 'linux',
+  InspectAssetsParams: {},
+  InspectAssetsResult: { source: 'single-file', entries: [], total: 0 },
+  InspectInput: inspectInput,
+  InspectReport: inspectReport,
+  InspectTargetParams: {},
+  InspectTargetResult: { sections: [], sectionsTruncated: false },
+  IntakeOptions: {},
+  IntakeSource: inspectInput.source,
+  InventoryDocument: { schemaVersion: 1, entries: [inventoryEntry] },
+  InventoryEntry: inventoryEntry,
+  InventorySummary: {
+    fileCount: 0,
+    directoryCount: 0,
+    symlinkCount: 0,
+    otherCount: 0,
+    totalBytes: 0,
+    truncated: false,
+    excluded: [],
+    formats: {},
+  },
+  IsoTimestamp: timestamp,
+  Job: job,
+  JobBudget: {},
+  JobEvent: event,
+  JobEventPage: { schemaVersion: 1, items: [event] },
+  JobMode: 'investigate',
+  JobPage: { schemaVersion: 1, items: [job] },
+  JobState: 'created',
+  JobStep: step,
+  JobView: { schemaVersion: 1, job, steps: [step], nextAction: 'fingerprint' },
+  ListEvidenceInput: {},
+  ListJobsInput: {},
+  ListTargetsInput: { projectId: id('prj') },
+  Locator: { type: 'path', path: 'src/app.ts' },
+  Observation: observation,
+  OperationId: 'inspect_target',
+  PageInfo: {},
+  PageInput: {},
+  PhoenixErrorShape: errorShape,
+  Prerequisite: { id: 'test', description: 'test prerequisite', satisfied: true },
+  Producer: producer,
+  Project: project,
+  ProjectPage: { schemaVersion: 1, items: [project] },
+  ProviderAvailability: availability,
+  ProviderDescriptor: descriptor,
+  ProviderStatus: providerStatus,
+  RelationType: 'calls',
+  Sha256Hex: digest,
+  StepStatus: 'pending',
+  TargetClassification: classification,
+  TargetDescription: description,
+  TargetKind: 'unknown',
+  TargetManifest: manifest,
+  TargetOs: 'unknown',
+  TargetPage: { schemaVersion: 1, items: [manifest] },
+  TargetPlatform: { os: 'unknown', osBasis: 'not-applicable', arches: [] },
+  TargetSource: description.source,
+  TargetWarning: { code: 'UNKNOWN_FORMAT', message: 'unknown' },
+  ToolInvokeInput: { operation: 'inspect_target', target: { path: 'sample' } },
+  ToolResponseEnvelope: envelope,
+  ToolWarning: { code: 'TEST', message: 'test' },
+};
+for (const [name, prefix] of Object.entries({
+  ProjectId: 'prj',
+  TargetId: 'tgt',
+  ArtifactId: 'art',
+  JobId: 'job',
+  StepId: 'stp',
+  EventId: 'evt',
+  RequestId: 'req',
+  ObservationId: 'obs',
+  EvidenceRefId: 'evr',
+  FindingId: 'fnd',
+  RelationId: 'rel',
+}))
+  fixtures[name] = id(prefix);
+
+Object.assign(fixtures, {
+  BoundedJsonValue: { nested: [null, true, 1, 'text'] },
+  BoundedJsonObject: {},
+  RelativePath: 'src/app.ts',
+  ExcludePattern: '.git',
+  HttpUrl: 'https://example.com/app',
+  TerminalJobState: 'completed',
+  BudgetName: 'maxToolCalls',
+  ProviderId: 'phoenix.fileinfo',
+});

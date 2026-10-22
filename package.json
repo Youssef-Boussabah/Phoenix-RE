@@ -1,0 +1,38 @@
+{
+  "name": "phoenix",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "packageManager": "pnpm@11.18.0",
+  "engines": {
+    "node": ">=24.11.0"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "tsc -b --clean",
+    "typecheck": "tsc -p tsconfig.check.json && tsc -p tests/tsconfig.portable.json",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "boundaries": "node scripts/check-boundaries.ts",
+    "contracts:snapshot": "pnpm build && node scripts/contracts-snapshot.ts",
+    "contracts:check": "pnpm build && node scripts/contracts-snapshot.ts --check",
+    "licenses:check": "node scripts/check-licenses.ts",
+    "test": "pnpm typecheck && vitest run --project unit",
+    "test:coverage": "vitest run --coverage --project unit",
+    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm boundaries && pnpm contracts:check && pnpm licenses:check",
+    "test:mutations": "node scripts/review-mutations.ts"
+  },
+  "devDependencies": {
+    "typescript": "6.0.3",
+    "@types/node": "24.10.1",
+    "vitest": "5.0.5",
+    "@vitest/coverage-v8": "5.0.5",
+    "vite": "8.0.3",
+    "eslint": "10.13.0",
+    "typescript-eslint": "8.72.0",
+    "prettier": "3.9.10",
+    "@phoenix/contracts": "workspace:*"
+  }
+}

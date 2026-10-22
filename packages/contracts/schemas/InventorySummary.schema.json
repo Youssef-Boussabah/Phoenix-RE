@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "fileCount": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "directoryCount": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "symlinkCount": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "otherCount": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "totalBytes": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "truncated": {
+      "type": "boolean"
+    },
+    "excluded": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "x-phoenix-runtime-constraints": "Normalized RelativePath rules plus literal names/relpaths only; no glob expressions"
+      }
+    },
+    "formats": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 9007199254740991
+      }
+    }
+  },
+  "required": [
+    "fileCount",
+    "directoryCount",
+    "symlinkCount",
+    "otherCount",
+    "totalBytes",
+    "truncated",
+    "excluded",
+    "formats"
+  ],
+  "additionalProperties": false,
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/InventorySummary.schema.json",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

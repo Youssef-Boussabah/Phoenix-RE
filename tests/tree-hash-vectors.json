@@ -1,0 +1,30 @@
+[
+  {
+    "record": ["F", "a\nF forged", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 1],
+    "utf8Hex": "5b2246222c22615c6e4620666f72676564222c2261616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161222c315d0a"
+  },
+  {
+    "record": [
+      "L",
+      "tab\tquote\"slash\\",
+      "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    ],
+    "utf8Hex": "5b224c222c227461625c7471756f74655c22736c6173685c5c222c2262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262225d0a"
+  },
+  {
+    "record": ["D", "carriage\rreturn"],
+    "utf8Hex": "5b2244222c2263617272696167655c7272657475726e225d0a"
+  },
+  {
+    "record": ["O", "control\u0001"],
+    "utf8Hex": "5b224f222c22636f6e74726f6c5c7530303031225d0a"
+  },
+  {
+    "record": ["D", "café"],
+    "utf8Hex": "5b2244222c22636166c3a9225d0a"
+  },
+  {
+    "record": ["D", "nul\u0000"],
+    "utf8Hex": "5b2244222c226e756c5c7530303030225d0a"
+  }
+]

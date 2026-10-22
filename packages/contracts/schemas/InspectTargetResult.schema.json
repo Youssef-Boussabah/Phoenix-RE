@@ -1,0 +1,428 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "formatDetails": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "elf"
+            },
+            "class": {
+              "type": "string",
+              "enum": [
+                "elf32",
+                "elf64"
+              ]
+            },
+            "data": {
+              "type": "string",
+              "enum": [
+                "lsb",
+                "msb"
+              ]
+            },
+            "osabi": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "type": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "machine": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "entry": {
+              "type": "string"
+            },
+            "interpreter": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "format",
+            "class",
+            "data",
+            "osabi",
+            "type",
+            "machine",
+            "entry"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "pe"
+            },
+            "machine": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "magic": {
+              "type": "string",
+              "enum": [
+                "pe32",
+                "pe32+"
+              ]
+            },
+            "characteristics": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "isDll": {
+              "type": "boolean"
+            },
+            "subsystem": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "sectionCount": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "timeDateStamp": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "hasClrHeader": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "format",
+            "machine",
+            "magic",
+            "characteristics",
+            "isDll",
+            "subsystem",
+            "sectionCount",
+            "timeDateStamp",
+            "hasClrHeader"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "macho"
+            },
+            "cpuType": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4294967295
+            },
+            "cpuSubtype": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4294967295
+            },
+            "fileType": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "loadCommandCount": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "flags": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "bits": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "const": 32
+                },
+                {
+                  "type": "number",
+                  "const": 64
+                }
+              ]
+            }
+          },
+          "required": [
+            "format",
+            "cpuType",
+            "cpuSubtype",
+            "fileType",
+            "loadCommandCount",
+            "flags",
+            "bits"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "macho-fat"
+            },
+            "arches": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "cpuType": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 4294967295
+                  },
+                  "cpuSubtype": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 4294967295
+                  },
+                  "offset": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "size": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "cpuType",
+                  "cpuSubtype",
+                  "offset",
+                  "size"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "format",
+            "arches"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "wasm"
+            },
+            "version": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "format",
+            "version"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "dex"
+            },
+            "version": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "format",
+            "version"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "enum": [
+                "zip",
+                "jar",
+                "apk"
+              ]
+            },
+            "entryCount": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "sampledEntries": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "truncated": {
+              "type": "boolean"
+            },
+            "zip64": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "format",
+            "entryCount",
+            "sampledEntries",
+            "truncated",
+            "zip64"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "asar"
+            },
+            "headerSize": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "fileCount": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "truncated": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "format",
+            "headerSize",
+            "fileCount",
+            "truncated"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "java-class"
+            },
+            "majorVersion": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "minorVersion": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "format",
+            "majorVersion",
+            "minorVersion"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "text"
+            },
+            "encoding": {
+              "type": "string",
+              "enum": [
+                "ascii",
+                "utf-8",
+                "utf-8-bom"
+              ]
+            },
+            "shebang": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "format",
+            "encoding"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "size": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "virtualAddress": {
+            "type": "string"
+          },
+          "flags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "offset",
+          "size",
+          "flags"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "sectionsTruncated": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "sections",
+    "sectionsTruncated"
+  ],
+  "additionalProperties": false,
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/InspectTargetResult.schema.json",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

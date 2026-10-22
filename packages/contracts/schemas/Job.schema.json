@@ -1,0 +1,243 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^job_[0-9a-f]{32}$",
+      "description": "JobId"
+    },
+    "projectId": {
+      "type": "string",
+      "pattern": "^prj_[0-9a-f]{32}$",
+      "description": "ProjectId"
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "investigate",
+        "reconstruct",
+        "verify"
+      ]
+    },
+    "objective": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4000
+    },
+    "targetId": {
+      "type": "string",
+      "pattern": "^tgt_[0-9a-f]{32}$",
+      "description": "TargetId"
+    },
+    "candidateTargetId": {
+      "type": "string",
+      "pattern": "^tgt_[0-9a-f]{32}$",
+      "description": "TargetId"
+    },
+    "basedOnJobId": {
+      "type": "string",
+      "pattern": "^job_[0-9a-f]{32}$",
+      "description": "JobId"
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "created",
+        "fingerprinting",
+        "ready",
+        "planning",
+        "investigating",
+        "reconstructing",
+        "verifying",
+        "completed",
+        "partial",
+        "failed",
+        "cancelled"
+      ]
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "budget": {
+      "type": "object",
+      "properties": {
+        "maxWallClockMs": {
+          "default": 1800000,
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maxToolCalls": {
+          "default": 200,
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "additionalProperties": false
+    },
+    "policy": {
+      "type": "object",
+      "properties": {
+        "allowExecution": {
+          "default": false,
+          "type": "boolean"
+        },
+        "allowNetwork": {
+          "default": false,
+          "type": "boolean"
+        },
+        "allowCloudInference": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "host": {
+      "type": "object",
+      "properties": {
+        "os": {
+          "type": "string",
+          "enum": [
+            "windows",
+            "macos",
+            "linux"
+          ]
+        },
+        "arch": {
+          "type": "string",
+          "enum": [
+            "x86",
+            "x64",
+            "arm",
+            "arm64",
+            "riscv64",
+            "wasm32",
+            "other",
+            "unknown"
+          ]
+        },
+        "osRelease": {
+          "type": "string"
+        },
+        "nodeVersion": {
+          "type": "string"
+        },
+        "isWsl": {
+          "type": "boolean"
+        },
+        "translated": {
+          "type": "boolean"
+        },
+        "phoenixVersion": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "os",
+        "arch",
+        "osRelease",
+        "nodeVersion",
+        "isWsl",
+        "phoenixVersion"
+      ],
+      "additionalProperties": false
+    },
+    "error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": [
+            "INVALID_REQUEST",
+            "NOT_FOUND",
+            "TARGET_UNREADABLE",
+            "TARGET_CHANGED",
+            "NOT_SUPPORTED",
+            "PROVIDER_UNAVAILABLE",
+            "HOST_INCOMPATIBLE",
+            "POLICY_DENIED",
+            "TIMEOUT",
+            "CANCELLED",
+            "OUTPUT_LIMIT_EXCEEDED",
+            "PROVIDER_FAILED",
+            "PROVIDER_OUTPUT_INVALID",
+            "INVALID_STATE_TRANSITION",
+            "CONFLICT",
+            "BUDGET_EXHAUSTED",
+            "STEP_RETRIES_EXHAUSTED",
+            "STORAGE_ERROR",
+            "MIGRATION_FAILED",
+            "MIGRATION_CHECKSUM_MISMATCH",
+            "DB_SCHEMA_TOO_NEW",
+            "UNAUTHORIZED",
+            "INTERNAL"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "maxLength": 8192
+        },
+        "retryable": {
+          "type": "boolean"
+        },
+        "details": {
+          "x-phoenix-json-limits": {
+            "maxDepth": 64,
+            "maxNodes": 50000,
+            "maxSerializedBytes": 1048576
+          },
+          "description": "Bounded JSON; runtime validation enforces depth, node count, UTF-8 serialized size and acyclic plain data.",
+          "type": "object"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "retryable"
+      ],
+      "additionalProperties": false
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+    },
+    "finishedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "id",
+    "projectId",
+    "mode",
+    "objective",
+    "targetId",
+    "state",
+    "version",
+    "budget",
+    "policy",
+    "createdAt",
+    "updatedAt"
+  ],
+  "additionalProperties": false,
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/Job.schema.json",
+  "x-phoenix-runtime-constraints": "candidateTargetId present iff mode=verify; finishedAt iff terminal; active/completed jobs have no final error; cancellation errors use CANCELLED; failed/partial errors do not; current state obeys mode guards",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

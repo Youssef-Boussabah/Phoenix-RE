@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "string",
+  "enum": [
+    "elf",
+    "pe",
+    "macho",
+    "macho-fat",
+    "wasm",
+    "dex",
+    "apk",
+    "asar",
+    "zip",
+    "jar",
+    "java-class",
+    "html",
+    "text",
+    "empty",
+    "directory",
+    "url",
+    "unknown"
+  ],
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/FileFormat.schema.json",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

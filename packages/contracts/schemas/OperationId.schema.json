@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "string",
+  "enum": [
+    "inspect_target",
+    "list_modules",
+    "list_functions",
+    "decompile_function",
+    "get_references",
+    "get_call_graph",
+    "inspect_assets",
+    "trace_runtime",
+    "run_experiment",
+    "capture_interface"
+  ],
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/OperationId.schema.json",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

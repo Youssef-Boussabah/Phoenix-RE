@@ -1,0 +1,23 @@
+{
+  "name": "@phoenix/contracts",
+  "version": "1.0.0-m0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24.11.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "schemas"
+  ],
+  "dependencies": {
+    "zod": "4.6.7"
+  }
+}

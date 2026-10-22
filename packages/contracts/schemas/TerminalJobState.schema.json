@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "string",
+  "enum": [
+    "completed",
+    "partial",
+    "failed",
+    "cancelled"
+  ],
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/TerminalJobState.schema.json",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

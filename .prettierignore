@@ -1,0 +1,6 @@
+node_modules/
+**/dist/
+coverage/
+pnpm-lock.yaml
+docs/history/PHOENIX_Engineering_Source_of_Truth_v1.0.md
+packages/contracts/schemas/

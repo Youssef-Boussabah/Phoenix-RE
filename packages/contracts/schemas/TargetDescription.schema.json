@@ -1,0 +1,803 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "file",
+            "directory",
+            "url"
+          ]
+        },
+        "displayName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "displayName"
+      ],
+      "additionalProperties": false
+    },
+    "localPath": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "x-phoenix-runtime-constraints": "Only HTTP and HTTPS are permitted; generic URI syntax does not imply protocol permission"
+    },
+    "classification": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "web",
+            "electron",
+            "source",
+            "elf",
+            "pe",
+            "macho",
+            "android",
+            "dotnet",
+            "wasm",
+            "unknown"
+          ]
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "elf",
+            "pe",
+            "macho",
+            "macho-fat",
+            "wasm",
+            "dex",
+            "apk",
+            "asar",
+            "zip",
+            "jar",
+            "java-class",
+            "html",
+            "text",
+            "empty",
+            "directory",
+            "url",
+            "unknown"
+          ]
+        },
+        "signals": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "basis": {
+                "type": "string",
+                "enum": [
+                  "signature",
+                  "structure",
+                  "extension",
+                  "heuristic",
+                  "url-scheme"
+                ]
+              },
+              "description": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "x-phoenix-runtime-constraints": "NFC, well-formed Unicode, POSIX relative path; no absolute paths, empty/dot segments, NUL or backslashes"
+              }
+            },
+            "required": [
+              "basis",
+              "description"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "classifierVersion": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "format",
+        "signals",
+        "classifierVersion"
+      ],
+      "additionalProperties": false
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "web",
+        "electron",
+        "source",
+        "elf",
+        "pe",
+        "macho",
+        "android",
+        "dotnet",
+        "wasm",
+        "unknown"
+      ]
+    },
+    "platform": {
+      "type": "object",
+      "properties": {
+        "os": {
+          "type": "string",
+          "enum": [
+            "windows",
+            "macos",
+            "linux",
+            "android",
+            "freebsd",
+            "any",
+            "unknown"
+          ]
+        },
+        "osBasis": {
+          "type": "string",
+          "enum": [
+            "header",
+            "assumed",
+            "not-applicable"
+          ]
+        },
+        "arches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "x86",
+              "x64",
+              "arm",
+              "arm64",
+              "riscv64",
+              "wasm32",
+              "other",
+              "unknown"
+            ]
+          }
+        },
+        "bitness": {
+          "anyOf": [
+            {
+              "type": "number",
+              "const": 32
+            },
+            {
+              "type": "number",
+              "const": 64
+            }
+          ]
+        },
+        "endianness": {
+          "type": "string",
+          "enum": [
+            "little",
+            "big"
+          ]
+        },
+        "binaryType": {
+          "type": "string",
+          "enum": [
+            "executable",
+            "shared-library",
+            "object",
+            "core",
+            "bundle",
+            "unknown"
+          ]
+        }
+      },
+      "required": [
+        "os",
+        "osBasis",
+        "arches"
+      ],
+      "additionalProperties": false
+    },
+    "formatDetails": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "elf"
+            },
+            "class": {
+              "type": "string",
+              "enum": [
+                "elf32",
+                "elf64"
+              ]
+            },
+            "data": {
+              "type": "string",
+              "enum": [
+                "lsb",
+                "msb"
+              ]
+            },
+            "osabi": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "type": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "machine": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "entry": {
+              "type": "string"
+            },
+            "interpreter": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "format",
+            "class",
+            "data",
+            "osabi",
+            "type",
+            "machine",
+            "entry"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "pe"
+            },
+            "machine": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "magic": {
+              "type": "string",
+              "enum": [
+                "pe32",
+                "pe32+"
+              ]
+            },
+            "characteristics": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "isDll": {
+              "type": "boolean"
+            },
+            "subsystem": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "sectionCount": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "timeDateStamp": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "hasClrHeader": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "format",
+            "machine",
+            "magic",
+            "characteristics",
+            "isDll",
+            "subsystem",
+            "sectionCount",
+            "timeDateStamp",
+            "hasClrHeader"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "macho"
+            },
+            "cpuType": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4294967295
+            },
+            "cpuSubtype": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4294967295
+            },
+            "fileType": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "loadCommandCount": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "flags": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "bits": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "const": 32
+                },
+                {
+                  "type": "number",
+                  "const": 64
+                }
+              ]
+            }
+          },
+          "required": [
+            "format",
+            "cpuType",
+            "cpuSubtype",
+            "fileType",
+            "loadCommandCount",
+            "flags",
+            "bits"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "macho-fat"
+            },
+            "arches": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "cpuType": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 4294967295
+                  },
+                  "cpuSubtype": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 4294967295
+                  },
+                  "offset": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "size": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "cpuType",
+                  "cpuSubtype",
+                  "offset",
+                  "size"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "format",
+            "arches"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "wasm"
+            },
+            "version": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "format",
+            "version"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "dex"
+            },
+            "version": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "format",
+            "version"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "enum": [
+                "zip",
+                "jar",
+                "apk"
+              ]
+            },
+            "entryCount": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "sampledEntries": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "truncated": {
+              "type": "boolean"
+            },
+            "zip64": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "format",
+            "entryCount",
+            "sampledEntries",
+            "truncated",
+            "zip64"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "asar"
+            },
+            "headerSize": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "fileCount": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "truncated": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "format",
+            "headerSize",
+            "fileCount",
+            "truncated"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "java-class"
+            },
+            "majorVersion": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "minorVersion": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "format",
+            "majorVersion",
+            "minorVersion"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "format": {
+              "type": "string",
+              "const": "text"
+            },
+            "encoding": {
+              "type": "string",
+              "enum": [
+                "ascii",
+                "utf-8",
+                "utf-8-bom"
+              ]
+            },
+            "shebang": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "format",
+            "encoding"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "digest": {
+      "type": "object",
+      "properties": {
+        "algorithm": {
+          "type": "string",
+          "enum": [
+            "sha256",
+            "phoenix-tree-sha256-v1"
+          ]
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "algorithm",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "sizeBytes": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "inventory": {
+      "type": "object",
+      "properties": {
+        "fileCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "directoryCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "symlinkCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "otherCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "totalBytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "truncated": {
+          "type": "boolean"
+        },
+        "excluded": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "x-phoenix-runtime-constraints": "Normalized RelativePath rules plus literal names/relpaths only; no glob expressions"
+          }
+        },
+        "formats": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          }
+        }
+      },
+      "required": [
+        "fileCount",
+        "directoryCount",
+        "symlinkCount",
+        "otherCount",
+        "totalBytes",
+        "truncated",
+        "excluded",
+        "formats"
+      ],
+      "additionalProperties": false
+    },
+    "compatibility": {
+      "type": "object",
+      "properties": {
+        "staticAnalysis": {
+          "type": "string",
+          "const": "supported"
+        },
+        "nativeExecution": {
+          "type": "string",
+          "enum": [
+            "compatible",
+            "emulation-required",
+            "incompatible",
+            "not-applicable",
+            "unknown"
+          ]
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "staticAnalysis",
+        "nativeExecution",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "x-phoenix-runtime-constraints": "NFC, well-formed Unicode, POSIX relative path; no absolute paths, empty/dot segments, NUL or backslashes"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "inspectedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+    },
+    "inspectedOn": {
+      "type": "object",
+      "properties": {
+        "os": {
+          "type": "string",
+          "enum": [
+            "windows",
+            "macos",
+            "linux"
+          ]
+        },
+        "arch": {
+          "type": "string",
+          "enum": [
+            "x86",
+            "x64",
+            "arm",
+            "arm64",
+            "riscv64",
+            "wasm32",
+            "other",
+            "unknown"
+          ]
+        },
+        "osRelease": {
+          "type": "string"
+        },
+        "nodeVersion": {
+          "type": "string"
+        },
+        "isWsl": {
+          "type": "boolean"
+        },
+        "translated": {
+          "type": "boolean"
+        },
+        "phoenixVersion": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "os",
+        "arch",
+        "osRelease",
+        "nodeVersion",
+        "isWsl",
+        "phoenixVersion"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "source",
+    "classification",
+    "kind",
+    "compatibility",
+    "warnings",
+    "inspectedAt",
+    "inspectedOn"
+  ],
+  "additionalProperties": false,
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/TargetDescription.schema.json",
+  "x-phoenix-runtime-constraints": "HTTP/HTTPS target URLs only; kind equals classification.kind; sha256 exactly matches SHA-256 digest; truncated inventories have no digest; source type agrees with URL presence and digest algorithm",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

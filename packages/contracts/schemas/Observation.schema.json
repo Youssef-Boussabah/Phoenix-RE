@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^obs_[0-9a-f]{32}$",
+      "description": "ObservationId"
+    },
+    "targetId": {
+      "type": "string",
+      "pattern": "^tgt_[0-9a-f]{32}$",
+      "description": "TargetId"
+    },
+    "jobId": {
+      "type": "string",
+      "pattern": "^job_[0-9a-f]{32}$",
+      "description": "JobId"
+    },
+    "requestId": {
+      "type": "string",
+      "pattern": "^req_[0-9a-f]{32}$",
+      "description": "RequestId"
+    },
+    "producer": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "intake",
+            "provider",
+            "user",
+            "model"
+          ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "id",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "static",
+        "runtime",
+        "user",
+        "derived"
+      ]
+    },
+    "type": {
+      "type": "string"
+    },
+    "data": {
+      "x-phoenix-json-limits": {
+        "maxDepth": 64,
+        "maxNodes": 50000,
+        "maxSerializedBytes": 1048576
+      },
+      "description": "Bounded JSON; runtime validation enforces depth, node count, UTF-8 serialized size and acyclic plain data."
+    },
+    "dataArtifactId": {
+      "type": "string",
+      "pattern": "^art_[0-9a-f]{32}$",
+      "description": "ArtifactId"
+    },
+    "targetDigest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "id",
+    "targetId",
+    "producer",
+    "kind",
+    "type",
+    "createdAt"
+  ],
+  "additionalProperties": false,
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/Observation.schema.json",
+  "x-phoenix-runtime-constraints": "data or dataArtifactId required; explicit JSON null is inline data, stored as TEXT null rather than SQL NULL",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

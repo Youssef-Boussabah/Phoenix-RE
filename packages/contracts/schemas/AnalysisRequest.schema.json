@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "pattern": "^req_[0-9a-f]{32}$",
+      "description": "RequestId"
+    },
+    "operation": {
+      "type": "string",
+      "enum": [
+        "inspect_target",
+        "list_modules",
+        "list_functions",
+        "decompile_function",
+        "get_references",
+        "get_call_graph",
+        "inspect_assets",
+        "trace_runtime",
+        "run_experiment",
+        "capture_interface"
+      ]
+    },
+    "targetId": {
+      "type": "string",
+      "pattern": "^tgt_[0-9a-f]{32}$",
+      "description": "TargetId"
+    },
+    "providerId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*(\\.[a-z0-9-]+)+$"
+    },
+    "params": {
+      "x-phoenix-json-limits": {
+        "maxDepth": 64,
+        "maxNodes": 50000,
+        "maxSerializedBytes": 1048576
+      },
+      "description": "Bounded JSON; runtime validation enforces depth, node count, UTF-8 serialized size and acyclic plain data."
+    },
+    "limits": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "timeoutMs": {
+          "default": 30000,
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 3600000
+        },
+        "maxInlineBytes": {
+          "default": 1048576,
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8388608
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "requestId",
+    "operation",
+    "params"
+  ],
+  "additionalProperties": false,
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/AnalysisRequest.schema.json",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

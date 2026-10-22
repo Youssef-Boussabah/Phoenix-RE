@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "descriptor": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*(\\.[a-z0-9-]+)+$"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "operations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "operation": {
+                "type": "string",
+                "enum": [
+                  "inspect_target",
+                  "list_modules",
+                  "list_functions",
+                  "decompile_function",
+                  "get_references",
+                  "get_call_graph",
+                  "inspect_assets",
+                  "trace_runtime",
+                  "run_experiment",
+                  "capture_interface"
+                ]
+              },
+              "requiresExecution": {
+                "type": "boolean"
+              },
+              "requiresNetwork": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "operation",
+              "requiresExecution",
+              "requiresNetwork"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "supportedKinds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "web",
+              "electron",
+              "source",
+              "elf",
+              "pe",
+              "macho",
+              "android",
+              "dotnet",
+              "wasm",
+              "unknown"
+            ]
+          }
+        },
+        "supportedHosts": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "windows",
+              "macos",
+              "linux"
+            ]
+          }
+        },
+        "priority": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "displayName",
+        "operations",
+        "supportedKinds",
+        "supportedHosts",
+        "priority"
+      ],
+      "additionalProperties": false
+    },
+    "availability": {
+      "type": "object",
+      "properties": {
+        "providerId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*(\\.[a-z0-9-]+)+$"
+        },
+        "available": {
+          "type": "boolean"
+        },
+        "prerequisites": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "satisfied": {
+                "type": "boolean"
+              },
+              "detail": {
+                "type": "string"
+              },
+              "remediation": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "description",
+              "satisfied"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "checkedAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+        }
+      },
+      "required": [
+        "providerId",
+        "available",
+        "prerequisites",
+        "checkedAt"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "descriptor",
+    "availability"
+  ],
+  "additionalProperties": false,
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/ProviderStatus.schema.json",
+  "x-phoenix-runtime-constraints": "descriptor and availability provider IDs must agree",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

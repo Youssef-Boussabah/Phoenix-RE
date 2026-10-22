@@ -1,0 +1,419 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "requestId": {
+      "type": "string",
+      "pattern": "^req_[0-9a-f]{32}$",
+      "description": "RequestId"
+    },
+    "operation": {
+      "type": "string",
+      "enum": [
+        "inspect_target",
+        "list_modules",
+        "list_functions",
+        "decompile_function",
+        "get_references",
+        "get_call_graph",
+        "inspect_assets",
+        "trace_runtime",
+        "run_experiment",
+        "capture_interface"
+      ]
+    },
+    "providerId": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*(\\.[a-z0-9-]+)+$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "providerVersion": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "targetId": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^tgt_[0-9a-f]{32}$",
+          "description": "TargetId"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "ok",
+        "partial",
+        "error"
+      ]
+    },
+    "durationMs": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "data": {
+      "anyOf": [
+        {
+          "x-phoenix-json-limits": {
+            "maxDepth": 64,
+            "maxNodes": 50000,
+            "maxSerializedBytes": 1048576
+          },
+          "description": "Bounded JSON; runtime validation enforces depth, node count, UTF-8 serialized size and acyclic plain data."
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^evr_[0-9a-f]{32}$",
+            "description": "EvidenceRefId"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "static",
+              "runtime",
+              "user",
+              "derived"
+            ]
+          },
+          "artifactId": {
+            "type": "string",
+            "pattern": "^art_[0-9a-f]{32}$",
+            "description": "ArtifactId"
+          },
+          "location": {
+            "type": "string"
+          },
+          "locator": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "byte-range"
+                  },
+                  "offset": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "length": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "type",
+                  "offset",
+                  "length"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "path"
+                  },
+                  "path": {
+                    "type": "string",
+                    "minLength": 1,
+                    "x-phoenix-runtime-constraints": "NFC, well-formed Unicode, POSIX relative path; no absolute paths, empty/dot segments, NUL or backslashes"
+                  },
+                  "line": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "column": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "type",
+                  "path"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "address"
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "space": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "address"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "event"
+                  },
+                  "sequence": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "type",
+                  "sequence"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "region"
+                  },
+                  "x": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "y": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "width": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "height": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "type",
+                  "x",
+                  "y",
+                  "width",
+                  "height"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "observationId": {
+            "type": "string",
+            "pattern": "^obs_[0-9a-f]{32}$",
+            "description": "ObservationId"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "artifactId"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^art_[0-9a-f]{32}$",
+            "description": "ArtifactId"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "sizeBytes": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "mediaType": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "sha256",
+          "sizeBytes",
+          "mediaType"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "page": {
+      "type": "object",
+      "properties": {
+        "nextCursor": {
+          "type": "string"
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "additionalProperties": false
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "error": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "enum": [
+                "INVALID_REQUEST",
+                "NOT_FOUND",
+                "TARGET_UNREADABLE",
+                "TARGET_CHANGED",
+                "NOT_SUPPORTED",
+                "PROVIDER_UNAVAILABLE",
+                "HOST_INCOMPATIBLE",
+                "POLICY_DENIED",
+                "TIMEOUT",
+                "CANCELLED",
+                "OUTPUT_LIMIT_EXCEEDED",
+                "PROVIDER_FAILED",
+                "PROVIDER_OUTPUT_INVALID",
+                "INVALID_STATE_TRANSITION",
+                "CONFLICT",
+                "BUDGET_EXHAUSTED",
+                "STEP_RETRIES_EXHAUSTED",
+                "STORAGE_ERROR",
+                "MIGRATION_FAILED",
+                "MIGRATION_CHECKSUM_MISMATCH",
+                "DB_SCHEMA_TOO_NEW",
+                "UNAUTHORIZED",
+                "INTERNAL"
+              ]
+            },
+            "message": {
+              "type": "string",
+              "maxLength": 8192
+            },
+            "retryable": {
+              "type": "boolean"
+            },
+            "details": {
+              "x-phoenix-json-limits": {
+                "maxDepth": 64,
+                "maxNodes": 50000,
+                "maxSerializedBytes": 1048576
+              },
+              "description": "Bounded JSON; runtime validation enforces depth, node count, UTF-8 serialized size and acyclic plain data.",
+              "type": "object"
+            }
+          },
+          "required": [
+            "code",
+            "message",
+            "retryable"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "requestId",
+    "operation",
+    "providerId",
+    "providerVersion",
+    "targetId",
+    "timestamp",
+    "status",
+    "durationMs",
+    "data",
+    "evidenceRefs",
+    "artifacts",
+    "warnings",
+    "error"
+  ],
+  "additionalProperties": false,
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/ToolResponseEnvelope.schema.json",
+  "x-phoenix-runtime-constraints": "error iff status=error; error data=null; provider identity/version paired; non-error responses require a provider",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "projectId": {
+      "type": "string",
+      "pattern": "^prj_[0-9a-f]{32}$",
+      "description": "ProjectId"
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "investigate",
+        "reconstruct",
+        "verify"
+      ]
+    },
+    "objective": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4000
+    },
+    "targetId": {
+      "type": "string",
+      "pattern": "^tgt_[0-9a-f]{32}$",
+      "description": "TargetId"
+    },
+    "candidateTargetId": {
+      "type": "string",
+      "pattern": "^tgt_[0-9a-f]{32}$",
+      "description": "TargetId"
+    },
+    "basedOnJobId": {
+      "type": "string",
+      "pattern": "^job_[0-9a-f]{32}$",
+      "description": "JobId"
+    },
+    "budget": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "maxWallClockMs": {
+          "default": 1800000,
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "maxToolCalls": {
+          "default": 200,
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "additionalProperties": false
+    },
+    "policy": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "allowExecution": {
+          "default": false,
+          "type": "boolean"
+        },
+        "allowNetwork": {
+          "default": false,
+          "type": "boolean"
+        },
+        "allowCloudInference": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "projectId",
+    "mode",
+    "objective",
+    "targetId"
+  ],
+  "additionalProperties": false,
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/CreateJobInput.schema.json",
+  "x-phoenix-runtime-constraints": "candidateTargetId present iff mode=verify",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "allowExecution": {
+      "default": false,
+      "type": "boolean"
+    },
+    "allowNetwork": {
+      "default": false,
+      "type": "boolean"
+    },
+    "allowCloudInference": {
+      "default": false,
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": false,
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/ExecutionPolicy.schema.json",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "string",
+  "enum": [
+    "x86",
+    "x64",
+    "arm",
+    "arm64",
+    "riscv64",
+    "wasm32",
+    "other",
+    "unknown"
+  ],
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/CpuArch.schema.json",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

@@ -1,0 +1,1205 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^evt_[0-9a-f]{32}$",
+          "description": "EventId"
+        },
+        "jobId": {
+          "type": "string",
+          "pattern": "^job_[0-9a-f]{32}$",
+          "description": "JobId"
+        },
+        "seq": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+        },
+        "type": {
+          "type": "string",
+          "const": "job_created"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": [
+                "investigate",
+                "reconstruct",
+                "verify"
+              ]
+            },
+            "targetId": {
+              "type": "string",
+              "pattern": "^tgt_[0-9a-f]{32}$",
+              "description": "TargetId"
+            }
+          },
+          "required": [
+            "mode",
+            "targetId"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "id",
+        "jobId",
+        "seq",
+        "createdAt",
+        "type",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^evt_[0-9a-f]{32}$",
+          "description": "EventId"
+        },
+        "jobId": {
+          "type": "string",
+          "pattern": "^job_[0-9a-f]{32}$",
+          "description": "JobId"
+        },
+        "seq": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+        },
+        "type": {
+          "type": "string",
+          "const": "job_started"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "runner": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "runner"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "id",
+        "jobId",
+        "seq",
+        "createdAt",
+        "type",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^evt_[0-9a-f]{32}$",
+          "description": "EventId"
+        },
+        "jobId": {
+          "type": "string",
+          "pattern": "^job_[0-9a-f]{32}$",
+          "description": "JobId"
+        },
+        "seq": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+        },
+        "type": {
+          "type": "string",
+          "const": "job_state_changed"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "from": {
+              "type": "string",
+              "enum": [
+                "created",
+                "fingerprinting",
+                "ready",
+                "planning",
+                "investigating",
+                "reconstructing",
+                "verifying",
+                "completed",
+                "partial",
+                "failed",
+                "cancelled"
+              ]
+            },
+            "to": {
+              "type": "string",
+              "enum": [
+                "created",
+                "fingerprinting",
+                "ready",
+                "planning",
+                "investigating",
+                "reconstructing",
+                "verifying",
+                "completed",
+                "partial",
+                "failed",
+                "cancelled"
+              ]
+            },
+            "reason": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "from",
+            "to"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "id",
+        "jobId",
+        "seq",
+        "createdAt",
+        "type",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^evt_[0-9a-f]{32}$",
+          "description": "EventId"
+        },
+        "jobId": {
+          "type": "string",
+          "pattern": "^job_[0-9a-f]{32}$",
+          "description": "JobId"
+        },
+        "seq": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+        },
+        "type": {
+          "type": "string",
+          "const": "target_identified"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "targetId": {
+              "type": "string",
+              "pattern": "^tgt_[0-9a-f]{32}$",
+              "description": "TargetId"
+            },
+            "kind": {
+              "type": "string",
+              "enum": [
+                "web",
+                "electron",
+                "source",
+                "elf",
+                "pe",
+                "macho",
+                "android",
+                "dotnet",
+                "wasm",
+                "unknown"
+              ]
+            },
+            "format": {
+              "type": "string",
+              "enum": [
+                "elf",
+                "pe",
+                "macho",
+                "macho-fat",
+                "wasm",
+                "dex",
+                "apk",
+                "asar",
+                "zip",
+                "jar",
+                "java-class",
+                "html",
+                "text",
+                "empty",
+                "directory",
+                "url",
+                "unknown"
+              ]
+            },
+            "digest": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "targetId",
+            "kind",
+            "format"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "id",
+        "jobId",
+        "seq",
+        "createdAt",
+        "type",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^evt_[0-9a-f]{32}$",
+          "description": "EventId"
+        },
+        "jobId": {
+          "type": "string",
+          "pattern": "^job_[0-9a-f]{32}$",
+          "description": "JobId"
+        },
+        "seq": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+        },
+        "type": {
+          "type": "string",
+          "const": "capabilities_probed"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "available": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "unavailable": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "available",
+            "unavailable"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "id",
+        "jobId",
+        "seq",
+        "createdAt",
+        "type",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^evt_[0-9a-f]{32}$",
+          "description": "EventId"
+        },
+        "jobId": {
+          "type": "string",
+          "pattern": "^job_[0-9a-f]{32}$",
+          "description": "JobId"
+        },
+        "seq": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+        },
+        "type": {
+          "type": "string",
+          "const": "provider_selected"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "providerId": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]*(\\.[a-z0-9-]+)+$"
+            },
+            "operation": {
+              "type": "string",
+              "enum": [
+                "inspect_target",
+                "list_modules",
+                "list_functions",
+                "decompile_function",
+                "get_references",
+                "get_call_graph",
+                "inspect_assets",
+                "trace_runtime",
+                "run_experiment",
+                "capture_interface"
+              ]
+            }
+          },
+          "required": [
+            "providerId",
+            "operation"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "id",
+        "jobId",
+        "seq",
+        "createdAt",
+        "type",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^evt_[0-9a-f]{32}$",
+          "description": "EventId"
+        },
+        "jobId": {
+          "type": "string",
+          "pattern": "^job_[0-9a-f]{32}$",
+          "description": "JobId"
+        },
+        "seq": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+        },
+        "type": {
+          "type": "string",
+          "const": "tool_executed"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "requestId": {
+              "type": "string",
+              "pattern": "^req_[0-9a-f]{32}$",
+              "description": "RequestId"
+            },
+            "operation": {
+              "type": "string",
+              "enum": [
+                "inspect_target",
+                "list_modules",
+                "list_functions",
+                "decompile_function",
+                "get_references",
+                "get_call_graph",
+                "inspect_assets",
+                "trace_runtime",
+                "run_experiment",
+                "capture_interface"
+              ]
+            },
+            "providerId": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9-]*(\\.[a-z0-9-]+)+$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "ok",
+                "partial",
+                "error"
+              ]
+            },
+            "durationMs": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "errorCode": {
+              "type": "string",
+              "enum": [
+                "INVALID_REQUEST",
+                "NOT_FOUND",
+                "TARGET_UNREADABLE",
+                "TARGET_CHANGED",
+                "NOT_SUPPORTED",
+                "PROVIDER_UNAVAILABLE",
+                "HOST_INCOMPATIBLE",
+                "POLICY_DENIED",
+                "TIMEOUT",
+                "CANCELLED",
+                "OUTPUT_LIMIT_EXCEEDED",
+                "PROVIDER_FAILED",
+                "PROVIDER_OUTPUT_INVALID",
+                "INVALID_STATE_TRANSITION",
+                "CONFLICT",
+                "BUDGET_EXHAUSTED",
+                "STEP_RETRIES_EXHAUSTED",
+                "STORAGE_ERROR",
+                "MIGRATION_FAILED",
+                "MIGRATION_CHECKSUM_MISMATCH",
+                "DB_SCHEMA_TOO_NEW",
+                "UNAUTHORIZED",
+                "INTERNAL"
+              ]
+            }
+          },
+          "required": [
+            "requestId",
+            "operation",
+            "providerId",
+            "status",
+            "durationMs"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "id",
+        "jobId",
+        "seq",
+        "createdAt",
+        "type",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^evt_[0-9a-f]{32}$",
+          "description": "EventId"
+        },
+        "jobId": {
+          "type": "string",
+          "pattern": "^job_[0-9a-f]{32}$",
+          "description": "JobId"
+        },
+        "seq": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+        },
+        "type": {
+          "type": "string",
+          "const": "evidence_saved"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "observationIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^obs_[0-9a-f]{32}$",
+                "description": "ObservationId"
+              }
+            }
+          },
+          "required": [
+            "observationIds"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "id",
+        "jobId",
+        "seq",
+        "createdAt",
+        "type",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^evt_[0-9a-f]{32}$",
+          "description": "EventId"
+        },
+        "jobId": {
+          "type": "string",
+          "pattern": "^job_[0-9a-f]{32}$",
+          "description": "JobId"
+        },
+        "seq": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+        },
+        "type": {
+          "type": "string",
+          "const": "step_failed"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "stepKey": {
+              "type": "string"
+            },
+            "attempt": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "error": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    "INVALID_REQUEST",
+                    "NOT_FOUND",
+                    "TARGET_UNREADABLE",
+                    "TARGET_CHANGED",
+                    "NOT_SUPPORTED",
+                    "PROVIDER_UNAVAILABLE",
+                    "HOST_INCOMPATIBLE",
+                    "POLICY_DENIED",
+                    "TIMEOUT",
+                    "CANCELLED",
+                    "OUTPUT_LIMIT_EXCEEDED",
+                    "PROVIDER_FAILED",
+                    "PROVIDER_OUTPUT_INVALID",
+                    "INVALID_STATE_TRANSITION",
+                    "CONFLICT",
+                    "BUDGET_EXHAUSTED",
+                    "STEP_RETRIES_EXHAUSTED",
+                    "STORAGE_ERROR",
+                    "MIGRATION_FAILED",
+                    "MIGRATION_CHECKSUM_MISMATCH",
+                    "DB_SCHEMA_TOO_NEW",
+                    "UNAUTHORIZED",
+                    "INTERNAL"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "maxLength": 8192
+                },
+                "retryable": {
+                  "type": "boolean"
+                },
+                "details": {
+                  "x-phoenix-json-limits": {
+                    "maxDepth": 64,
+                    "maxNodes": 50000,
+                    "maxSerializedBytes": 1048576
+                  },
+                  "description": "Bounded JSON; runtime validation enforces depth, node count, UTF-8 serialized size and acyclic plain data.",
+                  "type": "object"
+                }
+              },
+              "required": [
+                "code",
+                "message",
+                "retryable"
+              ],
+              "additionalProperties": false
+            },
+            "willRetry": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "stepKey",
+            "attempt",
+            "error",
+            "willRetry"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "id",
+        "jobId",
+        "seq",
+        "createdAt",
+        "type",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^evt_[0-9a-f]{32}$",
+          "description": "EventId"
+        },
+        "jobId": {
+          "type": "string",
+          "pattern": "^job_[0-9a-f]{32}$",
+          "description": "JobId"
+        },
+        "seq": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+        },
+        "type": {
+          "type": "string",
+          "const": "step_recovered"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "stepKey": {
+              "type": "string"
+            },
+            "previousOwner": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "stepKey",
+            "previousOwner"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "id",
+        "jobId",
+        "seq",
+        "createdAt",
+        "type",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^evt_[0-9a-f]{32}$",
+          "description": "EventId"
+        },
+        "jobId": {
+          "type": "string",
+          "pattern": "^job_[0-9a-f]{32}$",
+          "description": "JobId"
+        },
+        "seq": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+        },
+        "type": {
+          "type": "string",
+          "const": "budget_exhausted"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "budget": {
+              "type": "string",
+              "enum": [
+                "maxWallClockMs",
+                "maxToolCalls"
+              ]
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "used": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "budget",
+            "limit",
+            "used"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "id",
+        "jobId",
+        "seq",
+        "createdAt",
+        "type",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^evt_[0-9a-f]{32}$",
+          "description": "EventId"
+        },
+        "jobId": {
+          "type": "string",
+          "pattern": "^job_[0-9a-f]{32}$",
+          "description": "JobId"
+        },
+        "seq": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+        },
+        "type": {
+          "type": "string",
+          "const": "hypothesis_updated"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "findingId": {
+              "type": "string",
+              "pattern": "^fnd_[0-9a-f]{32}$",
+              "description": "FindingId"
+            },
+            "revision": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "findingId",
+            "revision"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "id",
+        "jobId",
+        "seq",
+        "createdAt",
+        "type",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^evt_[0-9a-f]{32}$",
+          "description": "EventId"
+        },
+        "jobId": {
+          "type": "string",
+          "pattern": "^job_[0-9a-f]{32}$",
+          "description": "JobId"
+        },
+        "seq": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+        },
+        "type": {
+          "type": "string",
+          "const": "build_completed"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "artifactIds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^art_[0-9a-f]{32}$",
+                "description": "ArtifactId"
+              }
+            },
+            "succeeded": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "artifactIds",
+            "succeeded"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "id",
+        "jobId",
+        "seq",
+        "createdAt",
+        "type",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^evt_[0-9a-f]{32}$",
+          "description": "EventId"
+        },
+        "jobId": {
+          "type": "string",
+          "pattern": "^job_[0-9a-f]{32}$",
+          "description": "JobId"
+        },
+        "seq": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+        },
+        "type": {
+          "type": "string",
+          "const": "comparison_completed"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "reportArtifactId": {
+              "type": "string",
+              "pattern": "^art_[0-9a-f]{32}$",
+              "description": "ArtifactId"
+            },
+            "passed": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "failed": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "reportArtifactId",
+            "passed",
+            "failed"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "id",
+        "jobId",
+        "seq",
+        "createdAt",
+        "type",
+        "payload"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "number",
+          "const": 1
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^evt_[0-9a-f]{32}$",
+          "description": "EventId"
+        },
+        "jobId": {
+          "type": "string",
+          "pattern": "^job_[0-9a-f]{32}$",
+          "description": "JobId"
+        },
+        "seq": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+        },
+        "type": {
+          "type": "string",
+          "const": "job_finished"
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "state": {
+              "type": "string",
+              "enum": [
+                "completed",
+                "partial",
+                "failed",
+                "cancelled"
+              ]
+            },
+            "error": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    "INVALID_REQUEST",
+                    "NOT_FOUND",
+                    "TARGET_UNREADABLE",
+                    "TARGET_CHANGED",
+                    "NOT_SUPPORTED",
+                    "PROVIDER_UNAVAILABLE",
+                    "HOST_INCOMPATIBLE",
+                    "POLICY_DENIED",
+                    "TIMEOUT",
+                    "CANCELLED",
+                    "OUTPUT_LIMIT_EXCEEDED",
+                    "PROVIDER_FAILED",
+                    "PROVIDER_OUTPUT_INVALID",
+                    "INVALID_STATE_TRANSITION",
+                    "CONFLICT",
+                    "BUDGET_EXHAUSTED",
+                    "STEP_RETRIES_EXHAUSTED",
+                    "STORAGE_ERROR",
+                    "MIGRATION_FAILED",
+                    "MIGRATION_CHECKSUM_MISMATCH",
+                    "DB_SCHEMA_TOO_NEW",
+                    "UNAUTHORIZED",
+                    "INTERNAL"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "maxLength": 8192
+                },
+                "retryable": {
+                  "type": "boolean"
+                },
+                "details": {
+                  "x-phoenix-json-limits": {
+                    "maxDepth": 64,
+                    "maxNodes": 50000,
+                    "maxSerializedBytes": 1048576
+                  },
+                  "description": "Bounded JSON; runtime validation enforces depth, node count, UTF-8 serialized size and acyclic plain data.",
+                  "type": "object"
+                }
+              },
+              "required": [
+                "code",
+                "message",
+                "retryable"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "state"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "id",
+        "jobId",
+        "seq",
+        "createdAt",
+        "type",
+        "payload"
+      ],
+      "additionalProperties": false
+    }
+  ],
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/JobEvent.schema.json",
+  "x-phoenix-runtime-constraints": "job_finished uses terminal states and coherent failure/partial/cancellation/completion error reasons; budget_exhausted uses recognized budgets and nonnegative safe integer counters with used >= limit",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.check.json",
+  "compilerOptions": {
+    "types": [],
+    "lib": ["ES2023", "DOM"],
+    "skipLibCheck": false
+  },
+  "include": ["portable-contracts.ts"]
+}

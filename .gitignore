@@ -1,0 +1,14 @@
+node_modules/
+**/dist/
+coverage/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+*.docx
+.DS_Store
+Thumbs.db
+.phoenix/
+*.db
+*.db-wal
+*.db-shm

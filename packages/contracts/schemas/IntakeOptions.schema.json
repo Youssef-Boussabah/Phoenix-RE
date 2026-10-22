@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "exclude": {
+      "default": [
+        ".git"
+      ],
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "x-phoenix-runtime-constraints": "Normalized RelativePath rules plus literal names/relpaths only; no glob expressions"
+      }
+    },
+    "maxEntries": {
+      "default": 50000,
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991
+    },
+    "maxTotalBytes": {
+      "default": 4294967296,
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "maxSnapshotBytes": {
+      "default": 2147483648,
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    }
+  },
+  "additionalProperties": false,
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/IntakeOptions.schema.json",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

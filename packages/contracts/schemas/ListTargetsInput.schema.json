@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "cursor": {
+      "type": "string"
+    },
+    "limit": {
+      "default": 100,
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5000
+    },
+    "projectId": {
+      "type": "string",
+      "pattern": "^prj_[0-9a-f]{32}$",
+      "description": "ProjectId"
+    }
+  },
+  "required": [
+    "projectId"
+  ],
+  "additionalProperties": false,
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/ListTargetsInput.schema.json",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

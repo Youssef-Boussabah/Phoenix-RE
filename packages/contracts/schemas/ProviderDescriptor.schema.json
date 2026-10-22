@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*(\\.[a-z0-9-]+)+$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "displayName": {
+      "type": "string"
+    },
+    "operations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "operation": {
+            "type": "string",
+            "enum": [
+              "inspect_target",
+              "list_modules",
+              "list_functions",
+              "decompile_function",
+              "get_references",
+              "get_call_graph",
+              "inspect_assets",
+              "trace_runtime",
+              "run_experiment",
+              "capture_interface"
+            ]
+          },
+          "requiresExecution": {
+            "type": "boolean"
+          },
+          "requiresNetwork": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "operation",
+          "requiresExecution",
+          "requiresNetwork"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "supportedKinds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "web",
+          "electron",
+          "source",
+          "elf",
+          "pe",
+          "macho",
+          "android",
+          "dotnet",
+          "wasm",
+          "unknown"
+        ]
+      }
+    },
+    "supportedHosts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "windows",
+          "macos",
+          "linux"
+        ]
+      }
+    },
+    "priority": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    }
+  },
+  "required": [
+    "id",
+    "version",
+    "displayName",
+    "operations",
+    "supportedKinds",
+    "supportedHosts",
+    "priority"
+  ],
+  "additionalProperties": false,
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/ProviderDescriptor.schema.json",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

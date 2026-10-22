@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "code": {
+      "type": "string",
+      "enum": [
+        "INVALID_REQUEST",
+        "NOT_FOUND",
+        "TARGET_UNREADABLE",
+        "TARGET_CHANGED",
+        "NOT_SUPPORTED",
+        "PROVIDER_UNAVAILABLE",
+        "HOST_INCOMPATIBLE",
+        "POLICY_DENIED",
+        "TIMEOUT",
+        "CANCELLED",
+        "OUTPUT_LIMIT_EXCEEDED",
+        "PROVIDER_FAILED",
+        "PROVIDER_OUTPUT_INVALID",
+        "INVALID_STATE_TRANSITION",
+        "CONFLICT",
+        "BUDGET_EXHAUSTED",
+        "STEP_RETRIES_EXHAUSTED",
+        "STORAGE_ERROR",
+        "MIGRATION_FAILED",
+        "MIGRATION_CHECKSUM_MISMATCH",
+        "DB_SCHEMA_TOO_NEW",
+        "UNAUTHORIZED",
+        "INTERNAL"
+      ]
+    },
+    "message": {
+      "type": "string",
+      "maxLength": 8192
+    },
+    "retryable": {
+      "type": "boolean"
+    },
+    "details": {
+      "x-phoenix-json-limits": {
+        "maxDepth": 64,
+        "maxNodes": 50000,
+        "maxSerializedBytes": 1048576
+      },
+      "description": "Bounded JSON; runtime validation enforces depth, node count, UTF-8 serialized size and acyclic plain data.",
+      "type": "object"
+    }
+  },
+  "required": [
+    "code",
+    "message",
+    "retryable"
+  ],
+  "additionalProperties": false,
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/PhoenixErrorShape.schema.json",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

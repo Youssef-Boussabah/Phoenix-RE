@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^stp_[0-9a-f]{32}$",
+      "description": "StepId"
+    },
+    "jobId": {
+      "type": "string",
+      "pattern": "^job_[0-9a-f]{32}$",
+      "description": "JobId"
+    },
+    "stepKey": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "running",
+        "succeeded",
+        "failed",
+        "cancelled"
+      ]
+    },
+    "attempt": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "maxAttempts": {
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991
+    },
+    "leaseOwner": {
+      "type": "string"
+    },
+    "leaseExpiresAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+    },
+    "output": {
+      "x-phoenix-json-limits": {
+        "maxDepth": 64,
+        "maxNodes": 50000,
+        "maxSerializedBytes": 1048576
+      },
+      "description": "Bounded JSON; runtime validation enforces depth, node count, UTF-8 serialized size and acyclic plain data."
+    },
+    "error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": [
+            "INVALID_REQUEST",
+            "NOT_FOUND",
+            "TARGET_UNREADABLE",
+            "TARGET_CHANGED",
+            "NOT_SUPPORTED",
+            "PROVIDER_UNAVAILABLE",
+            "HOST_INCOMPATIBLE",
+            "POLICY_DENIED",
+            "TIMEOUT",
+            "CANCELLED",
+            "OUTPUT_LIMIT_EXCEEDED",
+            "PROVIDER_FAILED",
+            "PROVIDER_OUTPUT_INVALID",
+            "INVALID_STATE_TRANSITION",
+            "CONFLICT",
+            "BUDGET_EXHAUSTED",
+            "STEP_RETRIES_EXHAUSTED",
+            "STORAGE_ERROR",
+            "MIGRATION_FAILED",
+            "MIGRATION_CHECKSUM_MISMATCH",
+            "DB_SCHEMA_TOO_NEW",
+            "UNAUTHORIZED",
+            "INTERNAL"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "maxLength": 8192
+        },
+        "retryable": {
+          "type": "boolean"
+        },
+        "details": {
+          "x-phoenix-json-limits": {
+            "maxDepth": 64,
+            "maxNodes": 50000,
+            "maxSerializedBytes": 1048576
+          },
+          "description": "Bounded JSON; runtime validation enforces depth, node count, UTF-8 serialized size and acyclic plain data.",
+          "type": "object"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "retryable"
+      ],
+      "additionalProperties": false
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+    },
+    "startedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+    },
+    "finishedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d\\.\\d{3}(?:Z))$"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "id",
+    "jobId",
+    "stepKey",
+    "status",
+    "attempt",
+    "maxAttempts",
+    "createdAt"
+  ],
+  "additionalProperties": false,
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/JobStep.schema.json",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

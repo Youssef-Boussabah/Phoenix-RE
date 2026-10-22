@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "x-phoenix-json-limits": {
+    "maxDepth": 64,
+    "maxNodes": 50000,
+    "maxSerializedBytes": 1048576
+  },
+  "description": "Bounded JSON; runtime validation enforces depth, node count, UTF-8 serialized size and acyclic plain data.",
+  "type": "object",
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/BoundedJsonObject.schema.json",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}

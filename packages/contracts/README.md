@@ -1,0 +1,15 @@
+# @phoenix/contracts
+
+Owner: unassigned (D-014 OPEN).
+
+Pure shared contracts for the PHOENIX engine, transports and providers. Runtime dependency: Zod 4 only. No filesystem, database, framework, process or analysis-tool implementation. Injected byte streams use `AsyncIterable<Uint8Array>`; public types compile with DOM + ES2023 and no Node ambient types.
+
+The public `.` export includes versioned target, job, event, evidence, project and report schemas; branded IDs; UTC timestamps; host/platform and classification values; standardized errors; two operation schemas; provider and PhoenixEngine behavioral interfaces; and state-transition guards. All schema types are inferred; use `z.input<typeof Schema>` when passing input that omits defaults. No implementation is advertised by the existence of an operation or interface.
+
+`CONTRACTS_VERSION` is `1.0.0-m0`; serialized documents use `schemaVersion: 1`. Nested values such as locators and references inherit their enclosing document version. Inputs are strict objects. Required wire payloads contain bounded JSON values: depth <=64 (root at zero), <=50,000 value nodes, and <=1 MiB serialized UTF-8 per field/object. Validation/copying is iterative. Cycles, accessors, nonplain objects, sparse arrays, undefined, functions, bigint and nonfinite numbers are rejected. Explicit null is data, distinct from absence. Budget zero means immediate exhaustion; `exhaustedBudget` is a pure predicate, not a runner.
+
+Generate `schemas/*.schema.json` with `pnpm contracts:snapshot`; verify with `pnpm contracts:check`. JSON Schema draft 2020-12 snapshots describe inputs. Zod refinements are runtime-only; annotations flag this, including nested constraints. Always validate with Zod at engine/provider boundaries. `jsonSchemaFor` uses a reserved `.invalid` identifier namespace; it makes no network requests.
+
+Generic smoke tests cover every exported schema, with semantic positive/negative tests for the review findings and literal enum requirements; format/locator/event unions; 363 state/mode pairs; error normalization and serialization; envelope and target invariants; budget boundaries; and deterministic JSON Schema generation. Run `pnpm test` and `pnpm test:coverage` from the root. Coverage gate: >=95% for lines, statements, functions and branches. Actual host results are in [hardening results](../../docs/WP0_WP1_HARDENING_RESULTS.md).
+
+The [hardening results](../../docs/WP0_WP1_HARDENING_RESULTS.md) supersede the original validation counts. Runtime URL checks permit HTTP(S) only. Relative paths are canonical NFC POSIX paths; exclusion patterns are literal names/relpaths. Terminal timestamps and final errors must match job lifecycle state; successful tool responses and provider status records have coherent provider identities. JSON null observations must later persist as TEXT `"null"` rather than SQL NULL. See accepted ADR-0008 for these details and proposed ADR-0007 for the unresolved ready-state budget decision. High line coverage is not proof of semantic completeness; mutation checks are deliberately scoped to the eleven listed review survivors.

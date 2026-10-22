@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "string",
+  "format": "uri",
+  "x-phoenix-runtime-constraints": "HTTP and HTTPS only; generic URI syntax grants no permission for other protocols",
+  "$id": "https://phoenix.invalid/contracts/1.0.0-m0/HttpUrl.schema.json",
+  "$comment": "Generated from Zod. Custom refinements, including nested refinements, require runtime Zod validation."
+}
