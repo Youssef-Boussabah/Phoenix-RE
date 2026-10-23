@@ -1,2 +1,15 @@
 * text=auto eol=lf
-# Add explicit paths for actual binary fixtures when WP3 creates them.
+tests/fixtures/native/hello-linux-x64.elf binary
+tests/fixtures/native/hello-linux-x86.elf binary
+tests/fixtures/native/hello-windows-x64.exe binary
+tests/fixtures/native/hello-windows-x86.exe binary
+tests/fixtures/native/hello-macos-arm64.macho binary
+tests/fixtures/native/hello-macos-arm64.o binary
+tests/fixtures/native/hello.wasm binary
+tests/fixtures/misc/png-named.exe binary
+tests/fixtures/misc/elf-named.png binary
+tests/fixtures/misc/empty.bin binary
+tests/fixtures/misc/sample.zip binary
+tests/fixtures/misc/sample.jar binary
+tests/fixtures/misc/sample.apk binary
+tests/fixtures/dirs/electron-packaged/resources/app.asar binary

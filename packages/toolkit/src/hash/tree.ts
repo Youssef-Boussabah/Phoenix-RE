@@ -4,7 +4,8 @@ import path from 'node:path';
 import type { BigIntStats } from 'node:fs';
 import type { InventoryEntry } from '@phoenix/contracts';
 import { PhoenixError } from '@phoenix/contracts';
-import { sameFile } from '../fs/safe-read.js';
+import { openRegularFile, sameFile } from '../fs/safe-read.js';
+import type { RegularFile } from '../fs/safe-read.js';
 import { checkAbort, safeInteger, unreadable } from '../internal.js';
 import {
   comparePaths,
@@ -13,7 +14,7 @@ import {
   toPosixRel,
   assertContained,
 } from '../platform/paths.js';
-import { hashFileTo } from './sha256.js';
+import { hashStream } from './sha256.js';
 
 export type TreeRecord =
   readonly ['F', string, string, number] | readonly ['L', string, string] | readonly ['D' | 'O', string];
@@ -26,6 +27,8 @@ export interface TreeHashOptions {
   maxEntries?: number;
   maxTotalBytes?: number;
   signal?: AbortSignal;
+  /** Read ranges only; the walker owns streaming/closing this verified handle. */
+  inspectFile?: (file: RegularFile, relativePath: string) => Promise<void>;
 }
 export interface TreeHashResult {
   algorithm: typeof TREE_ALGORITHM;
@@ -111,10 +114,17 @@ export async function hashDirectory(root: string, options: TreeHashOptions = {})
             break;
           }
           await assertContained(actualRoot, native);
-          const hashed = await hashFileTo(native, undefined, {
-            ...(options.signal === undefined ? {} : { signal: options.signal }),
-            maxBytes: maxTotalBytes - totalBytes,
-          });
+          const opened = await openRegularFile(native);
+          let hashed: { sha256: string; sizeBytes: number };
+          try {
+            await options.inspectFile?.(opened, relative);
+            hashed = await hashStream(opened.stream(options.signal), {
+              ...(options.signal === undefined ? {} : { signal: options.signal }),
+              maxBytes: maxTotalBytes - totalBytes,
+            });
+          } finally {
+            await opened.close();
+          }
           if (hashed.sizeBytes !== size)
             throw new PhoenixError('TARGET_CHANGED', 'File changed during inventory');
           totalBytes += size;

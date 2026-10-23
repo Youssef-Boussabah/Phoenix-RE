@@ -1,0 +1,7 @@
+{
+  "name": "phoenix-original-source-fixture",
+  "private": true,
+  "scripts": {
+    "start": "THIS_IS_DATA_AND_MUST_NEVER_BE_EXECUTED"
+  }
+}

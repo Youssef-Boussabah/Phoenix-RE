@@ -1,6 +1,6 @@
 # PHOENIX
 
-PHOENIX is an independent, evidence-driven reverse-engineering, reconstruction and verification platform. This repository implements the repository foundation, hardened shared contracts (WP0/WP1), and toolkit platform services (WP2). Format parsing, target classification, providers, CLI, server, investigation, model integration, reconstruction and verification engines remain future work.
+PHOENIX is an independent, evidence-driven reverse-engineering, reconstruction and verification platform. This repository implements the repository foundation, hardened shared contracts (WP0/WP1), toolkit platform services (WP2), and bounded format parsing, classification and stateless target intake (WP3). Providers, persistence, CLI, server, investigation, model integration, reconstruction and verification engines remain future work.
 
 The [engineering source of truth](docs/PHOENIX_ENGINEERING_SOURCE_OF_TRUTH.md) is canonical. Its §1 authority order applies: applicable laws/licenses and upstream terms, explicit current decisions, current specification, validated contracts/tests/behavior, then exploratory material. A discrepancy must be reconciled rather than silently changing product requirements. The [original Markdown](docs/history/PHOENIX_Engineering_Source_of_Truth_v1.0.md) is historical input; the original DOCX is local and ignored by Git.
 
@@ -18,13 +18,13 @@ pnpm test:coverage
 
 ```text
 packages/contracts/  Zod-first schemas, inferred types, pure state rules and interfaces
-packages/toolkit/    host/path/filesystem/hash/process/logging services
+packages/toolkit/    platform services, formats, classification and stateless intake
 scripts/             boundary, snapshot and license checks
 tests/              repository checks and approved tree-hash encoding vectors
 docs/               canonical specification, plan, accepted ADRs, historical input and results
 .github/workflows/   Node 24 Windows/macOS/Linux plus Node 26 Linux CI
 ```
 
-The runtime dependency graph is `@phoenix/toolkit → @phoenix/contracts → zod`. Byte-stream interfaces use portable async iterables and are checked without Node types. Provider and engine interfaces are contracts, with no working provider or engine claimed. See [contracts](packages/contracts/README.md), [toolkit](packages/toolkit/README.md), [WP2 results](docs/WP2_RESULTS.md), [contributing](CONTRIBUTING.md), the [implementation plan](docs/M0_IMPLEMENTATION_PLAN.md), and [verified hardening results](docs/WP0_WP1_HARDENING_RESULTS.md).
+The runtime dependency graph is `@phoenix/toolkit → @phoenix/contracts → zod`. Byte-stream interfaces use portable async iterables and are checked without Node types. Provider and engine interfaces are contracts, with no working provider or engine claimed. See [contracts](packages/contracts/README.md), [toolkit](packages/toolkit/README.md), [WP2 results](docs/WP2_RESULTS.md), [WP3 results](docs/WP3_RESULTS.md), [contributing](CONTRIBUTING.md), the [implementation plan](docs/M0_IMPLEMENTATION_PLAN.md), and [verified hardening results](docs/WP0_WP1_HARDENING_RESULTS.md).
 
 MIT is intended for PHOENIX-owned code. Contributor provenance and dependency-license review remain required before public distribution; dependencies retain their own licenses. All packages are private. No CI platform is considered validated until it has actually run successfully.

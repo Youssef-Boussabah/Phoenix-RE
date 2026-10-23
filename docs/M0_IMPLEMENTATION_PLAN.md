@@ -1,7 +1,7 @@
 # PHOENIX — M0 Foundation Implementation Plan
 
 > **Document ID:** PHX-M0-PLAN-001
-> **Status:** P-1 through P-6 accepted by project instruction on 2026-10-22; WP0/WP1 and hardening implemented; WP2 platform services implemented, platform validation recorded separately
+> **Status:** P-1 through P-6 accepted by project instruction on 2026-10-22; WP0/WP1 and hardening implemented; WP2 platform services and WP3 formats/intake implemented, validation recorded separately
 > **Date:** 2026-10-22
 > **Governing spec:** `docs/PHOENIX_ENGINEERING_SOURCE_OF_TRUTH.md` (PHX-SOT-001 v1.0.2). Where this plan and the source of truth (SOT) disagree, the SOT wins until a proposal in §9 is accepted through the SOT §20.2 workflow.
 > **Audience:** the implementing coding agent (Codex) and reviewers.
@@ -1649,10 +1649,19 @@ Plus small directory fixtures (`dirs/source-node`, `dirs/static-site`, `dirs/ele
 - extension spoofing → signature wins, with `EXTENSION_MISMATCH`;
 - directory rules 1–5;
 - URL → web with `globalThis.fetch` replaced by a throwing stub (proves no network);
-- compatibility matrix (ELF x64 on linux-x64 = compatible; on linux-arm64 = incompatible; Mach-O x64 on macos-arm64 = emulation-required; PE on linux = incompatible);
+- **Historical optimistic compatibility examples (superseded by ADR-0009):** ELF x64 on linux-x64 = compatible; on linux-arm64 = incompatible; Mach-O x64 on macos-arm64 = emulation-required; PE on linux = incompatible. These original examples did not establish structural validity, executable identity or target OS certainty.
+- **Current owner-approved policy:** test actual parser outputs. ELF OSABI-0 and universal Mach-O remain unknown; partial/malformed structure or unestablished executable/CPU identity cannot yield compatible. Matching OS/CPU and emulation policy examples require established header evidence and supported structural validation. They never guarantee loading/execution or emulator installation.
 - golden `TargetDescription` snapshots (timestamps and host normalized).
 
 **Exit:** coverage ≥ 85% on `formats` and `intake`.
+
+**Owner-approved review correction:** [ADR-0009](adr/ADR-0009-wp3-eligibility-and-url-identity.md), accepted by the WP3 review-corrections instruction, formalizes conservative native eligibility and public/persistent URL identity. The corrected toolkit uses local structuralStatus outcomes and unknown-by-default native policy; malformed facts may be retained but cannot be described as successful parsing. ET_DYN plus validated PT_INTERP identifies executable-capable PIE; no distinguishing evidence means unknown binaryType. Native fixture expectations include binaryType without changed bytes/hashes. File warnings are capped at 32 after all sources, and ZIP package identity requires complete, portable, unambiguous entries with supported local metadata.
+
+TargetDescription URLs and future manifest HTTP(S) url/uri fields are credential-free **identity URLs** (origin/path only). Userinfo, all query parameters and all fragments are removed before output; URL_ACCESS_CONTEXT_REMOVED warns that removal can change retrieval semantics. Future network workflows must obtain exact access context through protected handling, never ordinary manifests or a silent fetch of the sanitized URL. No fetch, persistence or vault is implemented in WP3. See [hardening verification](WP3_HARDENING_RESULTS.md). Current schemas stay unchanged; syntax/protocol validation alone does not implement this output policy.
+
+**Implementation record:** [WP3_RESULTS.md](WP3_RESULTS.md), [toolkit API/limits](../packages/toolkit/README.md) and [fixture provenance](../tests/fixtures/README.md). Intake composes the existing walker through an optional verified-handle inspection callback; the tree encoding and digest are unchanged. Real ELF32/64 and PE32/PE32+ fixtures supplement the original native set. Parsers are bounded metadata inspection, not complete loader/VM validators. CLR is recognized only when its directory maps to a bounded CLI header. FAT64 magic and swapped fat headers are handled explicitly. ASAR requires consistent pickle/tree/payload structure regardless of JSON property ordering. All decisions retain signals and warnings.
+
+**Implementation clarifications:** only included inventory entries supply directory evidence, so a default-excluded Git-only directory remains unknown. Static analysis is independent of host eligibility; an assumed OS (notably ELF System V) does not establish native compatibility, even when its provisional OS name matches the host. The compatibility matrix's compatible/emulation cases use established header OS evidence. No runtime, network fetch, persistence or provider registry is introduced. These defensive clarifications require no shared-schema or architectural change; SOT stays v1.0.2.
 
 ### WP4 — `@phoenix/evidence`
 

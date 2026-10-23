@@ -458,7 +458,7 @@ phoenix/
 
 Target intake is consolidated in `toolkit/src/intake`; the built-in fileinfo provider lives in toolkit, and external providers get directories only when implemented (ADR-0004).
 
-WP2 implements toolkit platform services (host/data paths, contained reads, IDs/hashing, executable discovery, authorized bounded processes and structured logging); see [WP2 results](WP2_RESULTS.md) and [review corrections](WP2_HARDENING_RESULTS.md) for actual verification and portability limitations. Formats, intake classification and provider dispatch remain later work packages. Shared v1.0.2 contracts and accepted architecture are unchanged.
+WP2 implements toolkit platform services (host/data paths, contained reads, IDs/hashing, executable discovery, authorized bounded processes and structured logging); see [WP2 results](WP2_RESULTS.md) and [review corrections](WP2_HARDENING_RESULTS.md). WP3 adds bounded format metadata, classification and stateless intake using those services; see [WP3 results](WP3_RESULTS.md) for actual verification, fixture provenance and portability limitations. The [WP3 hardening report](WP3_HARDENING_RESULTS.md) and [owner-approved ADR-0009](adr/ADR-0009-wp3-eligibility-and-url-identity.md) record conservative eligibility and credential-free URL identity corrections. Provider dispatch and persistence remain later work packages. Shared v1.0.2 contracts and accepted architecture are unchanged; this implementation-status update does not increment the specification version.
 
 Create packages only as functional code arrives; empty scaffolding is not progress. Keep all vendor coupling inside adapters. Every module requires a named owner, test surface, and contract.
 
@@ -635,6 +635,10 @@ The original D-001…D-014 entries are retained for historical context. The acce
 | D-021 | PROPOSED | Ready failure transition and execution-time accounting; approval required before WP6 | [ADR-0007](adr/ADR-0007-ready-failure-and-execution-time.md) |
 | D-022 | ACCEPTED | Harden unpublished contracts and independently test semantic requirements            | [ADR-0008](adr/ADR-0008-contract-input-hardening.md)         |
 
+| ID    | Status   | Decision                                                                                   | Record                                                       |
+| ----- | -------- | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------ |
+| D-023 | ACCEPTED | Owner-approved WP3 conservative eligibility and credential-free target URL identity policy | [ADR-0009](adr/ADR-0009-wp3-eligibility-and-url-identity.md) |
+
 ## 20.2 Mandatory change workflow
 
 1. Create `docs/adr/ADR-XXXX-short-title.md` with **Problem / Decision / Alternatives / Tradeoffs / Migration / Test impact**.
@@ -737,6 +741,8 @@ Before performing substantive PHOENIX work, an incoming teammate or coding agent
 The preferred answer from a future project assistant is not “we could add X.” It is a concrete plan or implementation referencing existing modules, applicable decisions, evidence, tests, tradeoffs, and next action—without quietly redefining PHOENIX.
 
 # 25. Changelog
+
+Implementation clarification, 2026-10-22: [ADR-0009](adr/ADR-0009-wp3-eligibility-and-url-identity.md) records the explicit owner-approved WP3 compatibility policy and mandatory URL privacy correction. The implementation-status and decision references change; v1.0.2 contracts/product architecture and prior decisions remain unchanged.
 
 | Date       | Version | Change                                                                                                                 | Reason                                                                                                                      |
 | ---------- | ------- | ---------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |

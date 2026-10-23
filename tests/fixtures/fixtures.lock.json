@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "path": "native/hello-linux-x64.elf",
+      "sha256": "d9061b13c17dbd3b7081c685acb5c438a7d53ff24d08f02a94e2c166470ec9de",
+      "size": 2144,
+      "expected": {
+        "kind": "elf",
+        "format": "elf",
+        "arches": ["x64"],
+        "binaryType": "executable"
+      }
+    },
+    {
+      "path": "native/hello-linux-x86.elf",
+      "sha256": "255af453398bfac2c20daa44914ee40f0e3115e16f3e66ec158e9dc4ac56e3cd",
+      "size": 1444,
+      "expected": {
+        "kind": "elf",
+        "format": "elf",
+        "arches": ["x86"],
+        "binaryType": "executable"
+      }
+    },
+    {
+      "path": "native/hello-windows-x64.exe",
+      "sha256": "d5577d7d4cd73037f3be338261a96934cf70e5e285220b84c594eab6db91995f",
+      "size": 1024,
+      "expected": {
+        "kind": "pe",
+        "format": "pe",
+        "arches": ["x64"],
+        "binaryType": "executable"
+      }
+    },
+    {
+      "path": "native/hello-windows-x86.exe",
+      "sha256": "a02bba9c9f047f320eb79376436ffa82fe75944b735210c16f217daba08307dd",
+      "size": 1024,
+      "expected": {
+        "kind": "pe",
+        "format": "pe",
+        "arches": ["x86"],
+        "binaryType": "executable"
+      }
+    },
+    {
+      "path": "native/hello-macos-arm64.macho",
+      "sha256": "93ed55a31f34fa89eb82e9b691c8f4ea9ea7cb54aaaf67682f61160cadbf4f7a",
+      "size": 16600,
+      "expected": {
+        "kind": "macho",
+        "format": "macho",
+        "arches": ["arm64"],
+        "binaryType": "executable"
+      }
+    },
+    {
+      "path": "native/hello-macos-arm64.o",
+      "sha256": "1bd62e08c0e40db18c05c6e1f3768bcbcce97b314824688a820dc72e6de5a525",
+      "size": 584,
+      "expected": {
+        "kind": "macho",
+        "format": "macho",
+        "arches": ["arm64"],
+        "binaryType": "object"
+      }
+    },
+    {
+      "path": "native/hello.wasm",
+      "sha256": "c973c7f6b87e7ef7524f624114736d7dd9e6e89c65a573695b265d7fc5f0167e",
+      "size": 721,
+      "expected": {
+        "kind": "wasm",
+        "format": "wasm",
+        "arches": ["wasm32"],
+        "binaryType": "unknown"
+      }
+    },
+    {
+      "path": "native/src/hello.c",
+      "sha256": "4aaed57a684740da33bbabd6d8dbdc3c5220f8915be1c0346d190acafa0154e9",
+      "size": 177,
+      "expected": {
+        "kind": "source",
+        "format": "text",
+        "arches": []
+      }
+    },
+    {
+      "path": "misc/png-named.exe",
+      "sha256": "39ee260cec7b907dddfacac8dfc2ea70b1e7fec32ccf33712f952be6e3666e72",
+      "size": 70,
+      "expected": {
+        "kind": "unknown",
+        "format": "unknown",
+        "arches": []
+      }
+    },
+    {
+      "path": "misc/elf-named.png",
+      "sha256": "d9061b13c17dbd3b7081c685acb5c438a7d53ff24d08f02a94e2c166470ec9de",
+      "size": 2144,
+      "expected": {
+        "kind": "elf",
+        "format": "elf",
+        "arches": ["x64"],
+        "binaryType": "executable"
+      }
+    },
+    {
+      "path": "misc/empty.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0,
+      "expected": {
+        "kind": "unknown",
+        "format": "empty",
+        "arches": []
+      }
+    },
+    {
+      "path": "misc/sample.zip",
+      "sha256": "a2dea1ba3e6e8595dc28992d7b80c07440b65de469317a1ab0f0f923ee595a13",
+      "size": 141,
+      "expected": {
+        "kind": "unknown",
+        "format": "zip",
+        "arches": []
+      }
+    },
+    {
+      "path": "misc/sample.jar",
+      "sha256": "b6456e59a268a790553036801dce84bdc08c9a7f1bc6f7233aa51a823d6a749c",
+      "size": 292,
+      "expected": {
+        "kind": "unknown",
+        "format": "jar",
+        "arches": []
+      }
+    },
+    {
+      "path": "misc/sample.apk",
+      "sha256": "621199c648d4219abd5ebbee28d3953edfaf4ef3a9708f6d8a16bad4ea6ae3de",
+      "size": 284,
+      "expected": {
+        "kind": "android",
+        "format": "apk",
+        "arches": []
+      }
+    },
+    {
+      "path": "dirs/electron-packaged/resources/app.asar",
+      "sha256": "16105bbd6a0f8f1052afeb17be6605c229ce3e6613187bd70b5966359a6dc95b",
+      "size": 124,
+      "expected": {
+        "kind": "electron",
+        "format": "asar",
+        "arches": []
+      }
+    },
+    {
+      "path": "dirs/source-node/package.json",
+      "sha256": "730da3480d9c2105ae5bd478d9c997d01337da837ef1f045248672942b949799",
+      "size": 142,
+      "expected": {
+        "kind": "unknown",
+        "format": "text",
+        "arches": []
+      }
+    },
+    {
+      "path": "dirs/source-node/index.js",
+      "sha256": "5b63136552577a64d788dc3cd4552739d0d60f9e1adb63ec4dfb6932d56fc75d",
+      "size": 46,
+      "expected": {
+        "kind": "source",
+        "format": "text",
+        "arches": []
+      }
+    },
+    {
+      "path": "dirs/static-site/index.html",
+      "sha256": "847c62d5f3765f916e2b6b548742fab16437d48f64bf6e92212de9b3e37ef063",
+      "size": 108,
+      "expected": {
+        "kind": "web",
+        "format": "html",
+        "arches": []
+      }
+    }
+  ],
+  "directories": [
+    {
+      "path": "dirs/source-node",
+      "algorithm": "phoenix-tree-sha256-v1",
+      "digest": "52276cadc7c7c5ada666e32f5f1c919b791e7964d1c93fef77b85e0f167f7e92",
+      "expected": {
+        "kind": "source",
+        "format": "directory"
+      }
+    },
+    {
+      "path": "dirs/static-site",
+      "algorithm": "phoenix-tree-sha256-v1",
+      "digest": "a2277e58e2da633b48ba165f855dc701e4e90de0f180eb8eb4becadc2cc27433",
+      "expected": {
+        "kind": "web",
+        "format": "directory"
+      }
+    },
+    {
+      "path": "dirs/electron-packaged",
+      "algorithm": "phoenix-tree-sha256-v1",
+      "digest": "e02b3d94dd785edc57e0d586b0a77d6109dc63d870fb115818fd38b9ec6c184b",
+      "expected": {
+        "kind": "electron",
+        "format": "directory"
+      }
+    }
+  ]
+}

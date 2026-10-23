@@ -1,0 +1,211 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`matches golden file, directory and URL descriptions with only local/time fields normalized 1`] = `
+[
+  {
+    "classification": {
+      "classifierVersion": "1.0.1-wp3",
+      "format": "pe",
+      "kind": "pe",
+      "signals": [
+        {
+          "basis": "signature",
+          "description": "Byte signature identifies pe",
+        },
+        {
+          "basis": "structure",
+          "description": "pe metadata parsed within bounded reads",
+        },
+      ],
+    },
+    "compatibility": {
+      "nativeExecution": "incompatible",
+      "reason": "Target OS differs from host; static inspection remains available",
+      "staticAnalysis": "supported",
+    },
+    "digest": {
+      "algorithm": "sha256",
+      "value": "d5577d7d4cd73037f3be338261a96934cf70e5e285220b84c594eab6db91995f",
+    },
+    "formatDetails": {
+      "characteristics": 34,
+      "format": "pe",
+      "hasClrHeader": false,
+      "isDll": false,
+      "machine": 34404,
+      "magic": "pe32+",
+      "sectionCount": 1,
+      "subsystem": 3,
+      "timeDateStamp": 0,
+    },
+    "inspectedAt": "2026-10-22T00:00:00.000Z",
+    "inspectedOn": {
+      "arch": "x64",
+      "isWsl": false,
+      "nodeVersion": "fixture",
+      "os": "linux",
+      "osRelease": "fixture",
+      "phoenixVersion": "fixture",
+    },
+    "kind": "pe",
+    "localPath": "<fixture>",
+    "platform": {
+      "arches": [
+        "x64",
+      ],
+      "binaryType": "executable",
+      "bitness": 64,
+      "endianness": "little",
+      "os": "windows",
+      "osBasis": "header",
+    },
+    "schemaVersion": 1,
+    "sha256": "d5577d7d4cd73037f3be338261a96934cf70e5e285220b84c594eab6db91995f",
+    "sizeBytes": 1024,
+    "source": {
+      "displayName": "hello-windows-x64.exe",
+      "type": "file",
+    },
+    "warnings": [],
+  },
+  {
+    "classification": {
+      "classifierVersion": "1.0.1-wp3",
+      "format": "directory",
+      "kind": "source",
+      "signals": [
+        {
+          "basis": "structure",
+          "description": "Node.js project marker; configuration treated as data",
+          "path": "package.json",
+        },
+      ],
+    },
+    "compatibility": {
+      "nativeExecution": "not-applicable",
+      "reason": "Requires a separate browser, build or language runtime workflow",
+      "staticAnalysis": "supported",
+    },
+    "digest": {
+      "algorithm": "phoenix-tree-sha256-v1",
+      "value": "52276cadc7c7c5ada666e32f5f1c919b791e7964d1c93fef77b85e0f167f7e92",
+    },
+    "inspectedAt": "2026-10-22T00:00:00.000Z",
+    "inspectedOn": {
+      "arch": "x64",
+      "isWsl": false,
+      "nodeVersion": "fixture",
+      "os": "linux",
+      "osRelease": "fixture",
+      "phoenixVersion": "fixture",
+    },
+    "inventory": {
+      "directoryCount": 0,
+      "excluded": [
+        ".git",
+      ],
+      "fileCount": 2,
+      "formats": {
+        "text": 2,
+      },
+      "otherCount": 0,
+      "symlinkCount": 0,
+      "totalBytes": 188,
+      "truncated": false,
+    },
+    "kind": "source",
+    "localPath": "<fixture>",
+    "schemaVersion": 1,
+    "sizeBytes": 188,
+    "source": {
+      "displayName": "source-node",
+      "type": "directory",
+    },
+    "warnings": [],
+  },
+  {
+    "classification": {
+      "classifierVersion": "1.0.1-wp3",
+      "format": "url",
+      "kind": "web",
+      "signals": [
+        {
+          "basis": "url-scheme",
+          "description": "HTTP(S) URL recognized without a network request",
+        },
+      ],
+    },
+    "compatibility": {
+      "nativeExecution": "not-applicable",
+      "reason": "Requires a separate browser, build or language runtime workflow",
+      "staticAnalysis": "supported",
+    },
+    "inspectedAt": "2026-10-22T00:00:00.000Z",
+    "inspectedOn": {
+      "arch": "x64",
+      "isWsl": false,
+      "nodeVersion": "fixture",
+      "os": "linux",
+      "osRelease": "fixture",
+      "phoenixVersion": "fixture",
+    },
+    "kind": "web",
+    "schemaVersion": 1,
+    "source": {
+      "displayName": "https://example.com/app",
+      "type": "url",
+    },
+    "url": "https://example.com/app",
+    "warnings": [
+      {
+        "code": "URL_NOT_FETCHED",
+        "message": "URL content not fetched or inspected",
+      },
+    ],
+  },
+  {
+    "classification": {
+      "classifierVersion": "1.0.1-wp3",
+      "format": "url",
+      "kind": "web",
+      "signals": [
+        {
+          "basis": "url-scheme",
+          "description": "HTTP(S) URL recognized without a network request",
+        },
+      ],
+    },
+    "compatibility": {
+      "nativeExecution": "not-applicable",
+      "reason": "Requires a separate browser, build or language runtime workflow",
+      "staticAnalysis": "supported",
+    },
+    "inspectedAt": "2026-10-22T00:00:00.000Z",
+    "inspectedOn": {
+      "arch": "x64",
+      "isWsl": false,
+      "nodeVersion": "fixture",
+      "os": "linux",
+      "osRelease": "fixture",
+      "phoenixVersion": "fixture",
+    },
+    "kind": "web",
+    "schemaVersion": 1,
+    "source": {
+      "displayName": "https://example.com/app",
+      "type": "url",
+    },
+    "url": "https://example.com/app",
+    "warnings": [
+      {
+        "code": "URL_NOT_FETCHED",
+        "message": "URL content not fetched or inspected",
+      },
+      {
+        "code": "URL_ACCESS_CONTEXT_REMOVED",
+        "message": "Identity URL only: userinfo, query and fragment removed. It is not an equivalent retrievable source; any future fetch must obtain protected access context separately.",
+      },
+    ],
+  },
+]
+`;
