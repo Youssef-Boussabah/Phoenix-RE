@@ -1,10 +1,12 @@
 import { expect, it } from 'vitest';
-import { readFile, writeFile, realpath } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
+import { randomUUID } from 'node:crypto';
 import path from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
 import type { ProcessRequest } from '@phoenix/contracts';
+import { PhoenixError } from '@phoenix/contracts';
 import { createProcessRunner, processEnvironment } from '../src/index.js';
-import { tempDir } from './support.js';
+import { tempDir, makeSymlink } from './support.js';
 const runner = createProcessRunner({ allowExecution: true, workflow: 'WP2 real test processes' });
 function request(code: string, overrides: Partial<ProcessRequest> = {}): ProcessRequest {
   return {
@@ -17,28 +19,24 @@ function request(code: string, overrides: Partial<ProcessRequest> = {}): Process
     ...overrides,
   };
 }
-it('captures actual stdout/stderr, exit codes, cwd and argument boundaries', async () => {
-  const root = await tempDir();
-  const args = ['spaces here', '$(touch injected)', '; echo unsafe', '"quotes"', 'é'];
-  const result = await runner.runProcess(
-    request(
-      'process.stdout.write(JSON.stringify({args:process.argv.slice(1),cwd:process.cwd()}));process.stderr.write("err");process.exitCode=7',
-      {
-        cwd: root,
-        args: [
-          '-e',
-          'process.stdout.write(JSON.stringify({args:process.argv.slice(1),cwd:process.cwd()}));process.stderr.write("err");process.exitCode=7',
-          ...args,
-        ],
-      },
-    ),
-  );
-  expect(JSON.parse(Buffer.from(result.stdout).toString())).toEqual({ args, cwd: await realpath(root) });
-  expect(Buffer.from(result.stderr).toString()).toBe('err');
-  expect(result.exitCode).toBe(7);
-  expect(result.signal).toBeNull();
-  expect(result.durationMs).toBeGreaterThanOrEqual(0);
-});
+for (const viaAlias of [false, true])
+  it(`captures actual stdout/stderr, exit codes, cwd and argument boundaries${viaAlias ? ' via a directory alias' : ''}`, async (context) => {
+    const root = await tempDir();
+    const marker = randomUUID();
+    await writeFile(path.join(root, 'cwd-marker.txt'), marker);
+    const cwd = viaAlias ? path.join(await tempDir(), 'cwd-alias') : root;
+    if (viaAlias) await makeSymlink(root, cwd, context, true);
+    const args = ['spaces here', '$(touch injected)', '; echo unsafe', '"quotes"', 'é'];
+    const code =
+      'process.stdout.write(JSON.stringify({args:process.argv.slice(1),marker:require("node:fs").readFileSync("cwd-marker.txt","utf8")}));process.stderr.write("err");process.exitCode=7';
+    const result = await runner.runProcess(request(code, { cwd, args: ['-e', code, ...args] }));
+    // A relative read proves directory identity without assuming long/8.3/canonical path spelling.
+    expect(JSON.parse(Buffer.from(result.stdout).toString())).toEqual({ args, marker });
+    expect(Buffer.from(result.stderr).toString()).toBe('err');
+    expect(result.exitCode).toBe(7);
+    expect(result.signal).toBeNull();
+    expect(result.durationMs).toBeGreaterThanOrEqual(0);
+  });
 it('requires explicit workflow authorization and validates execution limits', async () => {
   await expect(
     createProcessRunner({ allowExecution: false, workflow: 'inspection' }).runProcess(request('')),
@@ -236,11 +234,13 @@ it('normalizes real oversized-argument spawn failures without exposing arguments
   await expect(pending).rejects.toMatchObject({
     name: 'PhoenixError',
     code: 'INVALID_REQUEST',
-    details: { phase: 'spawn', systemCode: 'E2BIG' },
+    details: { phase: 'spawn' },
   });
   try {
     await pending;
   } catch (error) {
+    if (!(error instanceof PhoenixError)) throw error;
+    expect(['E2BIG', 'ENAMETOOLONG']).toContain(error.details?.['systemCode']);
     expect(JSON.stringify(error)).not.toContain('SENSITIVE_ARG_');
   }
 });

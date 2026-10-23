@@ -76,7 +76,7 @@ function spawnFailure(cause: unknown): PhoenixError {
   const code = (cause as NodeJS.ErrnoException | null)?.code;
   const systemCode = typeof code === 'string' && /^[A-Z0-9_]{1,40}$/.test(code) ? code : 'UNKNOWN';
   return new PhoenixError(
-    systemCode === 'E2BIG' || systemCode === 'EINVAL'
+    systemCode === 'E2BIG' || systemCode === 'EINVAL' || systemCode === 'ENAMETOOLONG'
       ? 'INVALID_REQUEST'
       : systemCode === 'ENOEXEC'
         ? 'NOT_SUPPORTED'
