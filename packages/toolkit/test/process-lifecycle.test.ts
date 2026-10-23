@@ -112,6 +112,39 @@ it('normalizes synchronous invalid-executable spawn errors in simulated Windows'
     expect(JSON.stringify(error)).not.toContain('sensitive argument');
   }
 });
+for (const delivery of ['synchronous', 'asynchronous'] as const)
+  it.each([
+    ['E2BIG', 'INVALID_REQUEST'],
+    ['ENAMETOOLONG', 'INVALID_REQUEST'],
+    ['EACCES', 'PROVIDER_FAILED'],
+  ] as const)(`normalizes %s to %s for ${delivery} launch failure`, async (systemCode, code) => {
+    const cause = Object.assign(Error('SENSITIVE_NODE_MESSAGE'), { code: systemCode });
+    mocks.spawn.mockReset();
+    if (delivery === 'synchronous')
+      mocks.spawn.mockImplementationOnce(() => {
+        throw cause;
+      });
+    else mocks.spawn.mockReturnValueOnce(child);
+    const pending = runner().runProcess({
+      ...input(new AbortController().signal),
+      args: ['SENSITIVE_ARGUMENT'],
+      env: { LANG: 'SENSITIVE_ENV_VALUE' },
+    });
+    if (delivery === 'asynchronous') {
+      child.emit('error', cause);
+      child.emit('close', -1, null);
+    }
+    await expect(pending).rejects.toMatchObject({
+      name: 'PhoenixError',
+      code,
+      details: { phase: 'spawn', systemCode },
+    });
+    try {
+      await pending;
+    } catch (error) {
+      expect(JSON.stringify(error)).not.toContain('SENSITIVE_');
+    }
+  });
 it('rejects Windows drive-less executable and cwd paths before spawning', async () => {
   for (const patch of [
     { file: '\\Tools\\node.exe' },
