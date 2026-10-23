@@ -19,8 +19,8 @@
     "contracts:snapshot": "pnpm build && node scripts/contracts-snapshot.ts",
     "contracts:check": "pnpm build && node scripts/contracts-snapshot.ts --check",
     "licenses:check": "node scripts/check-licenses.ts",
-    "test": "pnpm typecheck && vitest run --project unit",
-    "test:coverage": "vitest run --coverage --project unit",
+    "test": "pnpm typecheck && vitest run --project unit --project integration",
+    "test:coverage": "vitest run --coverage --project unit --project integration",
     "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm boundaries && pnpm contracts:check && pnpm licenses:check",
     "test:mutations": "node scripts/review-mutations.ts"
   },
@@ -34,6 +34,7 @@
     "typescript": "6.0.3",
     "typescript-eslint": "8.72.0",
     "vite": "8.0.3",
-    "vitest": "5.0.5"
+    "vitest": "5.0.5",
+    "@phoenix/evidence": "workspace:*"
   }
 }

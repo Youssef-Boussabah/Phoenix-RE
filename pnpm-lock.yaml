@@ -11,6 +11,9 @@ importers:
       '@phoenix/contracts':
         specifier: workspace:*
         version: link:packages/contracts
+      '@phoenix/evidence':
+        specifier: workspace:*
+        version: link:packages/evidence
       '@phoenix/toolkit':
         specifier: workspace:*
         version: link:packages/toolkit
@@ -44,6 +47,12 @@ importers:
       zod:
         specifier: 4.6.7
         version: 4.6.7
+
+  packages/evidence:
+    dependencies:
+      '@phoenix/contracts':
+        specifier: workspace:*
+        version: link:../contracts
 
   packages/toolkit:
     dependencies:

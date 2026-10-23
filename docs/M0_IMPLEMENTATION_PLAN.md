@@ -1,7 +1,7 @@
 # PHOENIX — M0 Foundation Implementation Plan
 
 > **Document ID:** PHX-M0-PLAN-001
-> **Status:** P-1 through P-6 accepted by project instruction on 2026-10-22; WP0/WP1 and hardening implemented; WP2 platform services and WP3 formats/intake implemented, validation recorded separately
+> **Status:** P-1 through P-6 accepted by project instruction on 2026-10-22; WP0/WP1 and hardening implemented; WP2 platform services and WP3 formats/intake and WP4 persistent evidence implemented, validation recorded separately
 > **Date:** 2026-10-22
 > **Governing spec:** `docs/PHOENIX_ENGINEERING_SOURCE_OF_TRUTH.md` (PHX-SOT-001 v1.0.2). Where this plan and the source of truth (SOT) disagree, the SOT wins until a proposal in §9 is accepted through the SOT §20.2 workflow.
 > **Audience:** the implementing coding agent (Codex) and reviewers.
@@ -1664,6 +1664,8 @@ TargetDescription URLs and future manifest HTTP(S) url/uri fields are credential
 **Implementation clarifications:** only included inventory entries supply directory evidence, so a default-excluded Git-only directory remains unknown. Static analysis is independent of host eligibility; an assumed OS (notably ELF System V) does not establish native compatibility, even when its provisional OS name matches the host. The compatibility matrix's compatible/emulation cases use established header OS evidence. No runtime, network fetch, persistence or provider registry is introduced. These defensive clarifications require no shared-schema or architectural change; SOT stays v1.0.2.
 
 ### WP4 — `@phoenix/evidence`
+
+Implementation status: see [initial WP4 results](WP4_RESULTS.md) and [WP4 review corrections](WP4_HARDENING_RESULTS.md). ADR-0009 supersedes URL source-key idempotence in §5.5: URL intakes use opaque per-intake IDs until protected source identity exists. CAS uses atomic no-clobber hard-link publication to avoid rename overwrite races.
 
 `db/*`, `migrations/0001_init.ts` (§5.6), repositories, CAS (§5.3).
 
