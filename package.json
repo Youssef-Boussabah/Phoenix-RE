@@ -25,14 +25,15 @@
     "test:mutations": "node scripts/review-mutations.ts"
   },
   "devDependencies": {
-    "typescript": "6.0.3",
+    "@phoenix/contracts": "workspace:*",
+    "@phoenix/toolkit": "workspace:*",
     "@types/node": "24.10.1",
-    "vitest": "5.0.5",
     "@vitest/coverage-v8": "5.0.5",
-    "vite": "8.0.3",
     "eslint": "10.13.0",
-    "typescript-eslint": "8.72.0",
     "prettier": "3.9.10",
-    "@phoenix/contracts": "workspace:*"
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.0",
+    "vite": "8.0.3",
+    "vitest": "5.0.5"
   }
 }

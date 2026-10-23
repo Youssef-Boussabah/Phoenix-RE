@@ -11,6 +11,9 @@ importers:
       '@phoenix/contracts':
         specifier: workspace:*
         version: link:packages/contracts
+      '@phoenix/toolkit':
+        specifier: workspace:*
+        version: link:packages/toolkit
       '@types/node':
         specifier: 24.10.1
         version: 24.10.1

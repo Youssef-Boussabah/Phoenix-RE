@@ -4,7 +4,7 @@ import { deflateSync } from 'node:zlib';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { asar, crc32, zip } from '../../tests/support/synth.ts';
-import { hashDirectory } from '../../packages/toolkit/dist/index.js';
+import { hashDirectory } from '@phoenix/toolkit';
 
 const root = fileURLToPath(new URL('../../tests/fixtures/', import.meta.url));
 const pngChunk = (type: string, data: Buffer): Buffer => {
